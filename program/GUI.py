@@ -19,6 +19,7 @@ from GUI_Design import Ui_Form as Design
 
 import Client as client
 import Wheelchair_Control as wheelchair_control
+import MessageSender as ms
 
 #####################################################################
 # GLOBALS
@@ -282,31 +283,31 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 	self.connect(self.keyboardNum1, \
                      QtCore.SIGNAL("clicked()"), \
                      self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+	self.connect(self.keyboardNum2, \
                      QtCore.SIGNAL("clicked()"), \
                      self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+	self.connect(self.keyboardNum3, \
                      QtCore.SIGNAL("clicked()"), \
                      self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+	self.connect(self.keyboardNum4, \
                      QtCore.SIGNAL("clicked()"), \
                      self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+	self.connect(self.keyboardNum5, \
                      QtCore.SIGNAL("clicked()"), \
                      self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+	self.connect(self.keyboardNum6, \
                      QtCore.SIGNAL("clicked()"), \
                      self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+	self.connect(self.keyboardNum7, \
                      QtCore.SIGNAL("clicked()"), \
                      self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+	self.connect(self.keyboardNum8, \
                      QtCore.SIGNAL("clicked()"), \
                      self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+	self.connect(self.keyboardNum9, \
                      QtCore.SIGNAL("clicked()"), \
                      self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+	self.connect(self.keyboardNum0, \
                      QtCore.SIGNAL("clicked()"), \
                      self.addCharToMessage)
 	self.connect(self.# PUT KEYBOARD KEYS HERE, \
@@ -528,22 +529,31 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
     
     #####################################################################
 
-    def  sendMessage(self):
+    def  sendUserMessage(self):
 
-        '''
-            Send text in the messageTextBox to the given destination
-        '''
+        # Send text in the messageTextBox to the given destination
+        
+        toNumber = #given phone number
+        ms.sendMessage(toNumber, USER_MESSAGE)
 
     #####################################################################
 
-    def addCharToMessage(self):
-        # add key string to message
-        # get text
-        # appends char to end of current message
-
-        # if space, use ' '
+    def addCharToMessage(self, button):
+        # get pressed key text string 
+        key = self.button.getText()
 
         # if backspace, pop last char
+        if key == Backspace:
+            USER_MESSAGE = USER_MESSAGE[:-1]
+
+        else:
+            # if space, use ' '
+            if key == Space
+                key = ' '
+
+            # append char to end of current message
+            USER_MESSAGE = USER_MESSAGE+key
+        
 
     #####################################################################
 

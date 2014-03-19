@@ -27,29 +27,29 @@ ARDUINO_INITIALIZATION_TIME = 2
 COMMAND_CHARACTER = 'x'
 GUI_SLEEP_TIMER = 1 * 100 # 100ms
 
+# need to fill in speed data that goes to the wheelchair
 WHEELCHAIR_COMMANDS = {
-    # need to fill in speed data that goes to the wheelchair
     1: { # speed 1
         'forward':  '00000000',
         'reverse':  '00000000',
         'left':     '00000000',
         'right':    '00000000',
         'stop':     '00000000',
-    }
+    },
     2: { # speed 2
         'forward':  '00000000',
         'reverse':  '00000000',
         'left':     '00000000',
         'right':    '00000000',
         'stop':     '00000000',
-    }
+    },
     3: { # speed 3
         'forward':  '00000000',
         'reverse':  '00000000',
         'left':     '00000000',
         'right':    '00000000',
         'stop':     '00000000',
-    }
+    },
 }
 
 DRIVE_CONTROLS = {
