@@ -66,7 +66,7 @@ def textInserter_messageSender_TestHarness():
                     printChoices(selector.splitChoices())
                     printBinaryControls('select left column','select right column')
                     selector.select(binaryChoice())
-                message = message + selector.getChoices().keys()[0]
+                message = message + selector.getChoices()[0]
                 selector.reset()
             elif option_counter == 1:
                 message = message[:-1]

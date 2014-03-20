@@ -19,7 +19,9 @@ from GUI_Design import Ui_Form as Design
 
 import Client as client
 import Wheelchair_Control as wheelchair_control
+
 import MessageSender as ms
+import TextInserter as ti
 
 #####################################################################
 # GLOBALS
@@ -533,27 +535,27 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 
         # Send text in the messageTextBox to the given destination
         
-        toNumber = #given phone number
-        ms.sendMessage(toNumber, USER_MESSAGE)
+        destination = self.
+        ms.sendMessage(destination, USER_MESSAGE)
 
     #####################################################################
 
     def addCharToMessage(self, button):
+        
         # get pressed key text string 
         key = self.button.getText()
 
         # if backspace, pop last char
-        if key == Backspace:
+        if key == 'Backspace':
             USER_MESSAGE = USER_MESSAGE[:-1]
 
         else:
             # if space, use ' '
-            if key == Space
+            if key == 'Space'
                 key = ' '
 
             # append char to end of current message
-            USER_MESSAGE = USER_MESSAGE+key
-        
+            USER_MESSAGE = USER_MESSAGE+key 
 
     #####################################################################
 
