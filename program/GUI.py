@@ -31,6 +31,7 @@ DEBUG = 1
 
 DEVICE_PATH = ''
 
+MESSAGE_DESTINATION = ''
 USER_MESSAGE = ''
 
 #####################################################################
@@ -49,8 +50,6 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
         self.connectWidgets()
 
         self.name = "Capstone Interface"
-
-        self.robot_type = None
 		
 	self.brainstormsServer = server
 	self.brainstormsClient = None
@@ -80,6 +79,7 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 
 	# Search for available Serial devices
 	self.searchForDevices()
+
 
         ## Wheelchair ##
 
@@ -113,7 +113,7 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 			self.pushButtonDeviceConnect.setChecked(False)
 			return
 
-	# 	
+	# initalize wheelchair control	
 	self.wheelchair = \
 	   wheelchair_control.capstone_wheelchair_control( \
 	      device_address=device,
@@ -124,7 +124,6 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 	self.disconnect(self.pushButtonDeviceConnect, \
                         QtCore.SIGNAL("clicked()"), \
 			self.connectToWheelchair)
-	
 	self.connect(self.pushButtonDeviceConnect, \
                      QtCore.SIGNAL("clicked()"), \
                      self.disconnectFromWheelchair)
@@ -157,28 +156,32 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 
     def disconnectFromWheelchair(self):
 
+        # stop the wheelchair
         self.stopWheelchair()
 
+        # set callbacks
         self.disconnect(self.pushButtonWheelchairConnect, \
                         QtCore.SIGNAL("clicked()"), \
                         self.disconnectFromWheelchair)
-		
 	self.connect(self.pushButtonWheelchairConnect, \
                      QtCore.SIGNAL("clicked()"), \
                      self.connectToWheelchair)
-		
-	self.pushButtonWheelchairConnect.setText('Connect')
 
+        # Change connect button text for next state 	
+	self.pushButtonDeviceConnect.setText('Connect')
+
+        # enable the wheelchair connection options
 	self.comboBoxWheelchairTransmitter.setEnabled(True)
 	self.comboBoxWheelchairPortSelect.setEnabled(True)
 	self.pushButtonWheelchairSearch.setEnabled(True)
-	
-	self.pushButtonWheelchairForward.setEnabled(False)
-	self.pushButtonWheelchairReverse.setEnabled(False)
-	self.pushButtonWheelchairLeft.setEnabled(False)
-	self.pushButtonWheelchairRight.setEnabled(False)
-	self.pushButtonWheelchairStop.setEnabled(False)
-	self.dialWheelchairSpeed.setEnabled(False)
+
+	# disable the drive controls
+	self.pushButtonForward.setEnabled(False)
+	self.pushButtonReverse.setEnabled(False)
+	self.pushButtonLeft.setEnabled(False)
+	self.pushButtonRight.setEnabled(False)
+	self.pushButtonStop.setEnabled(False)
+	self.dialSpeed.setEnabled(False)
 
         ''' implement later
         # Safety Measure: Explicitely require wheelchair speed control
@@ -212,19 +215,15 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 	self.connect(self.pushButtonForward, \
                      QtCore.SIGNAL("pressed()"), \
                      self.driveWheelchairForward)
-		
 	self.connect(self.pushButtonReverse, \
                      QtCore.SIGNAL("pressed()"), \
-                     self.driveWheelchairReverse)
-		
+                     self.driveWheelchairReverse)	
 	self.connect(self.pushButtonLeft, \
                      QtCore.SIGNAL("pressed()"), \
-                     self.driveWheelchairLeft)
-		
+                     self.driveWheelchairLeft)	
 	self.connect(self.pushButtonRight, \
                      QtCore.SIGNAL("pressed()"), \
                      self.driveWheelchairRight)
-	
 	self.connect(self.pushButtonStop, \
                      QtCore.SIGNAL("pressed()"), \
                      self.stopWheelchair)
@@ -235,7 +234,6 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 	self.connect(self.pushButtonDeviceSearch, \
                      QtCore.SIGNAL("clicked()"), \
                      self.searchForDevices)
-	
 	self.connect(self.pushButtonDeviceConnect, \
                      QtCore.SIGNAL("clicked()"), \
                      self.connectToWheelchair)
@@ -248,29 +246,26 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 	self.addAction(action)
 
         # Wheelchair Buttons
-        '''
-            Might change to WASD
-        '''
 	action = QtGui.QAction(self)
-	action.setShortcut(QtGui.QKeySequence("i"))
+	action.setShortcut(QtGui.QKeySequence("w"))
 	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonForward, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
 		
 	action = QtGui.QAction(self)
-	action.setShortcut(QtGui.QKeySequence("k"))
+	action.setShortcut(QtGui.QKeySequence("s"))
 	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonReverse, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
 		
 	action = QtGui.QAction(self)
-	action.setShortcut(QtGui.QKeySequence("j"))
+	action.setShortcut(QtGui.QKeySequence("a"))
 	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonLeft, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
 		
 	action = QtGui.QAction(self)
-	action.setShortcut(QtGui.QKeySequence("l"))
+	action.setShortcut(QtGui.QKeySequence("d"))
 	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonRight, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
@@ -281,91 +276,165 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
 
-	# Message Buttons
+
+	## Message Buttons ##
+	
+	# Keyboard Buttons
 	self.connect(self.keyboardNum1, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
+                     lambda: self.addCharToMessage('1'))
 	self.connect(self.keyboardNum2, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
+                     lambda: self.addCharToMessage('2'))
 	self.connect(self.keyboardNum3, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
+                     lambda: self.addCharToMessage('3'))
 	self.connect(self.keyboardNum4, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
+                     lambda: self.addCharToMessage('4'))
 	self.connect(self.keyboardNum5, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
+                     lambda: self.addCharToMessage('5'))
 	self.connect(self.keyboardNum6, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
+                     lambda: self.addCharToMessage('6'))
 	self.connect(self.keyboardNum7, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
+                     lambda: self.addCharToMessage('7'))
 	self.connect(self.keyboardNum8, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
+                     lambda: self.addCharToMessage('8'))
 	self.connect(self.keyboardNum9, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
+                     lambda: self.addCharToMessage('9'))
 	self.connect(self.keyboardNum0, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('0'))
+	
+	self.connect(self.keyboardQ, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('Q'))
+	self.connect(self.keyboardW, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('W'))
+	self.connect(self.keyboardE, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('E'))
+	self.connect(self.keyboardR, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('R'))
+	self.connect(self.keyboardT, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('T'))
+	self.connect(self.keyboardY, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('Y'))
+	self.connect(self.keyboardU, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('U'))
+	self.connect(self.keyboardI, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('I'))
+	self.connect(self.keyboardO, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('O'))
+	self.connect(self.keyboardP, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('P'))
+	self.connect(self.keyboardA, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('A'))
+	self.connect(self.keyboardS, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('S'))
+	self.connect(self.keyboardD, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('D'))
+	self.connect(self.keyboardF, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('F'))
+	self.connect(self.keyboardG, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('G'))
+	self.connect(self.keyboardH, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('H'))
+	self.connect(self.keyboardJ, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
-	self.connect(self.# PUT KEYBOARD KEYS HERE, \
+                     lambda: self.addCharToMessage('J'))
+	self.connect(self.keyboardK, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.addCharToMessage)
+                     lambda: self.addCharToMessage('K'))
+	self.connect(self.keyboardL, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('L'))
+	self.connect(self.keyboardZ, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('Z'))
+	self.connect(self.keyboardX, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('X'))
+	self.connect(self.keyboardC, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('C'))
+	self.connect(self.keyboardV, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('V'))
+	self.connect(self.keyboardB, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('B'))
+	self.connect(self.keyboardN, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('N'))
+	self.connect(self.keyboardM, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('M'))
+	
+	self.connect(self.keyboardPeriod, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('.'))
+	self.connect(self.keyboardComma, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage(','))
+	self.connect(self.keyboardApostrophe, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage("'"))
+	self.connect(self.keyboardQuestionMark, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('?'))
+	self.connect(self.keyboardLeftParen, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('('))
+	self.connect(self.keyboardRightParen, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage(')'))
+	self.connect(self.keyboardColon, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage(':'))
+	self.connect(self.keyboardSemiColon, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage(';'))
+	self.connect(self.keyboardExclamationMark, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('!'))
+	self.connect(self.keyboardSlash, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('/'))
+	
+	self.connect(self.keyboardBackspace, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('Backspace'))
+	
+	self.connect(self.keyboardSpace, \
+                     QtCore.SIGNAL("clicked()"), \
+                     lambda: self.addCharToMessage('Space'))
+
+
+	# send message button
+	self.connect(self.messageSendButton, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.sendUserMessage)
+	
 	
 		
     #####################################################################
@@ -458,6 +527,8 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 
     #####################################################################
 
+    ## Wheelchair Drive Commands ##
+    
     def driveWheelchairForward(self):
         #print "WheelchairForward"
         speed = self.dialWheelchairSpeed.value()
@@ -528,22 +599,51 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 	if match in thresholds['relaxation'].keys():
         '''
 	return(speed)
+
+    #####################################################################
+
+    def  setMessageDestination(self):
+
+        # build the message destination string
+
+        # get destination type
+        destType = str(self.selectDestType.currentText())
+
+        # get the text from the message destination line edit box
+        destination = self.lineEditMsgDest.text()
+
+        ## get MESSAGE_DESTINATION string ##
+        
+        # if we have a phone number...
+        if destType == 'Phone Number':
+        
+            # get the carrier
+            carrier = str(self.selectPhoneCarrier.currentText())
+
+            # build MESSAGE_DESTINATION string
+            if   carrier == 'AT&T'
+                MESSAGE_DESTINATION = destination+'@txt.att.net'
+            elif carrier == 'Sprint'
+                MESSAGE_DESTINATION = destination+'@messaging.sprintpcs.com'
+            elif carrier == 'T-Mobile'
+                MESSAGE_DESTINATION = destination+'@tmomail.net'
+            elif carrier == 'Verizon'
+                MESSAGE_DESTINATION = destination+'@vtext.com'
+
+        else:
+            # we have an email address
+            MESSAGE_DESTINATION = destination
     
     #####################################################################
 
     def  sendUserMessage(self):
 
         # Send text in the messageTextBox to the given destination
-        
-        destination = self.
-        ms.sendMessage(destination, USER_MESSAGE)
+        ms.sendMessage(MESSAGE_DESTINATION, USER_MESSAGE)
 
     #####################################################################
 
-    def addCharToMessage(self, button):
-        
-        # get pressed key text string 
-        key = self.button.getText()
+    def addCharToMessage(self, key):
 
         # if backspace, pop last char
         if key == 'Backspace':
