@@ -48,7 +48,7 @@ if (sys.platform == 'win32'):
         }
 
         data_files=[(".", \
-                     ["capstone_configuration.ini"]),
+                     ["capstone_program_configuration.ini"]),
                     ("images", \
                      ["images/puzzlebox.ico", \
                       "images/forward.svg", \
@@ -63,6 +63,7 @@ else:
         options={}
 
         # Reserved for non-Windows OS
+        data_files=[]
 
 
 setup(
@@ -72,16 +73,26 @@ setup(
         author='2014 NEU Capstone Team C6',
         author_email='',
         url='',
-        py_modules=['', \
-                    '', \
+        py_modules=['capstone', \
+                    'capstone.program', \
+                    'capstone.program.CharacterFreqLogger', \
+                    'capstone.program.Client', \
+                    'capstone.program.Configuration', \
+                    'capstone.program.GUI', \
+                    'capstone.program.GUI_Design', \
+                    'capstone.program.MessageSender', \
+                    'capstone.program.TextInserter', \
+#                    'capstone.program.TextTester', \
+                    'capstone.program.Wheelchair_Control', \
+                    'program-local', \
         ], \
-        console=["", \
-                 ""
+        console=["program-local", \
+#                 ""
         ], \
         options=options, \
-        zipfile = r'',
+        zipfile = r'lib\library.zip',
         data_files=data_files, \
-        windows=[{"script": "",
+        windows=[{"script": "program-local.py",
                   "icon_resources": [(1, os.path.join("images", "puzzlebox.ico"))]
                   },
         ], \
