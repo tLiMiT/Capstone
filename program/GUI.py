@@ -237,6 +237,13 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 	self.connect(self.pushButtonDeviceConnect, \
                      QtCore.SIGNAL("clicked()"), \
                      self.connectToWheelchair)
+
+        self.connect(self.setMsgDest, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.setMessageDestination)
+	self.connect(self.clearMsgDest, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.clearMessageDestination)
 	
 		
 	# Global Buttons
@@ -603,16 +610,12 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
     #####################################################################
 
     def  setMessageDestination(self):
-
-        # build the message destination string
-
+        
         # get destination type
         destType = str(self.selectDestType.currentText())
 
         # get the text from the message destination line edit box
-        destination = self.lineEditMsgDest.text()
-
-        ## get MESSAGE_DESTINATION string ##
+        destination = str(self.lineEditMsgDest.text())
         
         # if we have a phone number...
         if destType == 'Phone Number':
@@ -633,6 +636,16 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
         else:
             # we have an email address
             MESSAGE_DESTINATION = destination
+
+    #####################################################################
+
+    def  clearMessageDestination(self):
+
+        # clear the message destination line edit text
+        MESSAGE_DESTINATION = ''
+
+        # update the line edit text
+        self.lineEditMsgDest.setText(MESSAGE_DESTINATION)
     
     #####################################################################
 
@@ -640,6 +653,9 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 
         # Send text in the messageTextBox to the given destination
         ms.sendMessage(MESSAGE_DESTINATION, USER_MESSAGE)
+
+        # clear the message after being sent
+        self.clearMessage()
 
     #####################################################################
 
@@ -655,7 +671,20 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
                 key = ' '
 
             # append char to end of current message
-            USER_MESSAGE = USER_MESSAGE+key 
+            USER_MESSAGE = USER_MESSAGE+key
+
+        # update the line edit text
+        self.messageTextBox.setText(USER_MESSAGE)
+
+    #####################################################################
+
+    def  clearMessage(self):
+
+        # clear the user message line edit text
+        USER_MESSAGE = ''
+
+        # update the line edit text
+        self.messageTextBox.setText(USER_MESSAGE)
 
     #####################################################################
 
