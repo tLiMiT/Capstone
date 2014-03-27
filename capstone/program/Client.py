@@ -11,6 +11,21 @@ from PyQt4 import QtCore, QtGui, QtNetwork
 
 #import simplejson as json
 
-import Configuration as configuration
 
-## Not sure if needed
+#####################################################################
+# Globals
+#####################################################################
+
+DEBUG = 1
+
+
+#####################################################################
+# Main
+#####################################################################
+
+if __name__ == '__main__':
+	
+	# Perform correct KeyboardInterrupt handling
+	signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+	

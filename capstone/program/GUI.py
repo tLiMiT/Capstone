@@ -38,7 +38,7 @@ USER_MESSAGE = ''
 # CLASSES
 #####################################################################
 
-class capstone_client_interface(Qt.Gui.QWidget, Design):
+class capstone_program_client_interface(Qt.Gui.QWidget, Design):
     def __init__(self, log, server=None, DEBUG=DEBUG, parent=None):
         self.log = log
         self.DEBUG = DEBUG
@@ -51,8 +51,8 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 
         self.name = "Capstone Interface"
 		
-	self.brainstormsServer = server
-	self.brainstormsClient = None
+	#self.capstoneServer = server
+	self.capstoneClient = None
 	
 	self.wheelchair = None
 		
@@ -115,7 +115,7 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 
 	# initalize wheelchair control	
 	self.wheelchair = \
-	   wheelchair_control.capstone_wheelchair_control( \
+	   wheelchair_control.capstone_program_wheelchair_control( \
 	      device_address=device,
 	      command=None, \
 	      DEBUG=self.DEBUG)
@@ -201,16 +201,15 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 	'''	
 	self.connect(self.pushButtonWheelchairConcentrationEnable, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.updateWheelchairConcentrationButton)
-		
+                     self.updateWheelchairConcentrationButton)	
 	self.connect(self.pushButtonWheelchairRelaxationEnable, \
                      QtCore.SIGNAL("clicked()"), \
-                     self.updateWheelchairRelaxationButton)
-	'''	
+                     self.updateWheelchairRelaxationButton)	
 	self.connect(self.pushButtonWheelchairSpeedEnable, \
                      QtCore.SIGNAL("clicked()"), \
                      self.updateWheelchairSpeedButton)
-		
+	'''
+	
 	# Set drive control callbacks	
 	self.connect(self.pushButtonForward, \
                      QtCore.SIGNAL("pressed()"), \
@@ -427,14 +426,37 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 	self.connect(self.keyboardSlash, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('/'))
-	
 	self.connect(self.keyboardBackspace, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('Backspace'))
-	
 	self.connect(self.keyboardSpace, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('Space'))
+
+	self.connect(self.messageClearButton, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.clearMessage)
+
+        # set key select callbacks
+	self.connect(self.keyboardSelectLeft, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.selectLeftKeys)
+        self.connect(self.keyboardSelectRight, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.selectRightKeys)
+
+        # set key select actions          
+        action = QtGui.QAction(self)
+	action.setShortcut(QtGui.QKeySequence("a"))
+	self.connect(action, QtCore.SIGNAL("activated()"), self.keyboardSelectLeft, \
+                     QtCore.SLOT("animateClick()"))
+	self.addAction(action)
+		
+	action = QtGui.QAction(self)
+	action.setShortcut(QtGui.QKeySequence("d"))
+	self.connect(action, QtCore.SIGNAL("activated()"), self.keyboardSelectRight, \
+                     QtCore.SLOT("animateClick()"))
+	self.addAction(action)
 
 
 	# send message button
@@ -685,6 +707,28 @@ class capstone_client_interface(Qt.Gui.QWidget, Design):
 
         # update the line edit text
         self.messageTextBox.setText(USER_MESSAGE)
+
+    #####################################################################
+
+    def  selectLeftKeys(self):
+
+        
+
+    #####################################################################
+
+    def  selectRightKeys(self):
+
+        
+
+    #####################################################################
+
+    def  repaintKeys(self):
+
+        # red
+        self.keyboard#.setStyleSheet(_fromUtf8("background-color: rgb(255, 115, 80);"))
+
+        # blue
+        self.keyboard#.setStyleSheet(_fromUtf8("background-color: rgb(112, 174, 255);"))
 
     #####################################################################
 
