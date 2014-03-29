@@ -4,12 +4,11 @@
 
 import os, sys, time
 
-if (sys.platform == 'win32'):
-    DEFAULT_IMAGE_PATH = 'images'
-    import _winreg as winreg
-    import itertools
-    import re
-    import serial
+DEFAULT_IMAGE_PATH = 'images'
+import _winreg as winreg
+import itertools
+import re
+import serial
 
 import Configuration as configuration
 
@@ -17,7 +16,7 @@ from PyQt4 import QtCore, QtGui, QtNetwork
 
 from GUI_Design import Ui_Form as Design
 
-import Client as client
+import Client as program_client
 import Wheelchair_Control as wheelchair_control
 
 import MessageSender as ms
@@ -38,7 +37,7 @@ USER_MESSAGE = ''
 # CLASSES
 #####################################################################
 
-class capstone_program_client_interface(Qt.Gui.QWidget, Design):
+class capstone_program_client_interface(QtGui.QWidget, Design):
     def __init__(self, log, server=None, DEBUG=DEBUG, parent=None):
         self.log = log
         self.DEBUG = DEBUG
@@ -244,13 +243,13 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
                      QtCore.SIGNAL("clicked()"), \
                      self.clearMessageDestination)
 	
-		
+	'''	
 	# Global Buttons
 	action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("Tab"))
 	self.connect(action, QtCore.SIGNAL("triggered()"), self.rotateControlButtons)
 	self.addAction(action)
-
+        '''
         # Wheelchair Buttons
 	action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("w"))
@@ -436,7 +435,7 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
 	self.connect(self.messageClearButton, \
                      QtCore.SIGNAL("clicked()"), \
                      self.clearMessage)
-
+        '''
         # set key select callbacks
 	self.connect(self.keyboardSelectLeft, \
                      QtCore.SIGNAL("clicked()"), \
@@ -444,7 +443,7 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
         self.connect(self.keyboardSelectRight, \
                      QtCore.SIGNAL("clicked()"), \
                      self.selectRightKeys)
-
+        '''
         # set key select actions          
         action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("a"))
@@ -481,13 +480,13 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
         # Configure combo box
         if wheelchair_devices == []:
             wheelchair_devices.append('N/A')
-
-        if self.pushButtonWheelchairConnect.text != 'Disconnect':
+        '''
+        if self.pushButtonDeviceConnect.text != 'Disconnect':
             self.comboBoxWheelchairPortSelect.clear()
             
             for wheelchair in wheelchair_devices:
                 self.comboBoxWheelchairPortSelect.addItem(wheelchair)
-
+        '''
     #####################################################################
 
     def enumerateSerialPorts(self):
@@ -633,6 +632,8 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
 
     def  setMessageDestination(self):
         
+        global MESSAGE_DESTINATION
+        
         # get destination type
         destType = str(self.selectDestType.currentText())
 
@@ -646,14 +647,14 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
             carrier = str(self.selectPhoneCarrier.currentText())
 
             # build MESSAGE_DESTINATION string
-            if   carrier == 'AT&T'
-                MESSAGE_DESTINATION = destination+'@txt.att.net'
-            elif carrier == 'Sprint'
-                MESSAGE_DESTINATION = destination+'@messaging.sprintpcs.com'
-            elif carrier == 'T-Mobile'
-                MESSAGE_DESTINATION = destination+'@tmomail.net'
-            elif carrier == 'Verizon'
-                MESSAGE_DESTINATION = destination+'@vtext.com'
+            if   carrier == 'AT&T':
+                MESSAGE_DESTINATION = str(destination+'@txt.att.net')
+            elif carrier == 'Sprint':
+                MESSAGE_DESTINATION = str(destination+'@messaging.sprintpcs.com')
+            elif carrier == 'T-Mobile':
+                MESSAGE_DESTINATION = str(destination+'@tmomail.net')
+            elif carrier == 'Verizon':
+                MESSAGE_DESTINATION = str(destination+'@vtext.com')
 
         else:
             # we have an email address
@@ -662,6 +663,8 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
     #####################################################################
 
     def  clearMessageDestination(self):
+
+        global MESSAGE_DESTINATION
 
         # clear the message destination line edit text
         MESSAGE_DESTINATION = ''
@@ -683,13 +686,15 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
 
     def addCharToMessage(self, key):
 
+        global USER_MESSAGE
+
         # if backspace, pop last char
         if key == 'Backspace':
             USER_MESSAGE = USER_MESSAGE[:-1]
 
         else:
             # if space, use ' '
-            if key == 'Space'
+            if key == 'Space':
                 key = ' '
 
             # append char to end of current message
@@ -701,6 +706,8 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
     #####################################################################
 
     def  clearMessage(self):
+        
+        global USER_MESSAGE
 
         # clear the user message line edit text
         USER_MESSAGE = ''
@@ -712,23 +719,25 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
 
     def  selectLeftKeys(self):
 
-        
+        # blue button
+        self.repaintKeys
 
     #####################################################################
 
     def  selectRightKeys(self):
 
-        
+        # red button
+        self.repaintKeys
 
     #####################################################################
 
     def  repaintKeys(self):
 
         # red
-        self.keyboard#.setStyleSheet(_fromUtf8("background-color: rgb(255, 115, 80);"))
+        self.keyboardA.setStyleSheet(_fromUtf8("background-color: rgb(255, 115, 80);"))
 
         # blue
-        self.keyboard#.setStyleSheet(_fromUtf8("background-color: rgb(112, 174, 255);"))
+        self.keyboardD.setStyleSheet(_fromUtf8("background-color: rgb(112, 174, 255);"))
 
     #####################################################################
 
@@ -743,11 +752,12 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
                                            QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
+            '''
             if self.brainstormsClient != None:
                 
                 self.stopMotors()
                 self.brainstormsClient.socket.flush()
-                '''
+                
                 if self.brainstormsServer != None:
                     if self.brainstormsServer.rc == None:
                         
@@ -756,7 +766,7 @@ class capstone_program_client_interface(Qt.Gui.QWidget, Design):
                         
                     else:
                         self.brainstormsServer.rc.run('stop_motors')
-                '''
+            '''
                         
             event.accept()
 
@@ -775,7 +785,7 @@ if __name__ == '__main__':
 	
 	app = QtGui.QApplication(sys.argv)
 	
-	window = capstone_client_interface(log, DEBUG)
+	window = capstone_program_client_interface(log, DEBUG)
 	window.show()
 	
 	sys.exit(app.exec_())

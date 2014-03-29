@@ -7,7 +7,7 @@ import os, sys
 import glob
 
 if (sys.platform == 'win32'):
-	import py2exe
+        import py2exe
 	import shutil
 
 #####################################################################
@@ -36,11 +36,12 @@ if (sys.platform == 'win32'):
                           '_fltkagg', '_gtk', '_gtkcairo'], \
                   "dll_excludes": [ \
                           'tcl84.dll', 'tk84.dll' \
-                          'libgdk-win32-2.0-0.dll',
+                          'libgdk-win32-2.0-0.dll', \
+                          "MSVCP90.dll", \
                           'libgobject-2.0-0.dll'], \
                   "compressed": 2, \
                   "optimize": 2, \
-                  "bundle_files": 2, \
+                  "bundle_files": 3, \
                   "dist_dir": "dist", \
                   "xref": False, \
                   "skip_archive": False, \
@@ -67,7 +68,7 @@ else:
 
 
 setup(
-        name='C6_Capstone_Program',
+        name='capstone_program',
         version='0.1',
         description='A Brain-Computer Interface (BCI) control for an electric wheelchair',
         author='2014 NEU Capstone Team C6',
@@ -86,14 +87,15 @@ setup(
                     'capstone.program.Wheelchair_Control', \
                     'program-local', \
         ], \
-        console=["program-local", \
+        console=["program-local.py", \
 #                 ""
         ], \
         options=options, \
         zipfile = r'lib\library.zip',
         data_files=data_files, \
-        windows=[{"script": "program-local.py",
-                  "icon_resources": [(1, os.path.join("images", "puzzlebox.ico"))]
+        windows=[{ \
+                  "script":             "program-local.py",
+                  "icon_resources":     [(1, os.path.join("images", "puzzlebox.ico"))]
                   },
         ], \
         classifiers=['Development Status :: Prototype/Demo',

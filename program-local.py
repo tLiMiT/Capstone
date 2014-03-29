@@ -39,7 +39,7 @@ if __name__ == '__main__':
 	
     app = QtGui.QApplication(sys.argv)
 
-    window = GUI.capstone_client_interface(log, \
+    window = GUI.capstone_program_client_interface(log=None, \
                                            server=None, \
                                            DEBUG=DEBUG)
 
