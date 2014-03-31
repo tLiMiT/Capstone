@@ -435,7 +435,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.connect(self.messageClearButton, \
                      QtCore.SIGNAL("clicked()"), \
                      self.clearMessage)
-        '''
+        
         # set key select callbacks
 	self.connect(self.keyboardSelectLeft, \
                      QtCore.SIGNAL("clicked()"), \
@@ -443,7 +443,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         self.connect(self.keyboardSelectRight, \
                      QtCore.SIGNAL("clicked()"), \
                      self.selectRightKeys)
-        '''
+        
         # set key select actions          
         action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("a"))
@@ -559,27 +559,27 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     
     def driveWheelchairForward(self):
         #print "WheelchairForward"
-        speed = self.dialWheelchairSpeed.value()
+        speed = self.dialSpeed.value()
         self.wheelchair.sendCommand(speed, 'forward')
 	
     def driveWheelchairReverse(self):
         #print "WheelchairReverse"
-        speed = self.dialWheelchairSpeed.value()
+        speed = self.dialSpeed.value()
         self.wheelchair.sendCommand(speed, 'reverse')
 	
     def driveWheelchairLeft(self):
         #print "WheelchairLeft"
-        speed = self.dialWheelchairSpeed.value()
+        speed = self.dialSpeed.value()
         self.wheelchair.sendCommand(speed, 'left')
 	
     def driveWheelchairRight(self):
         #print "WheelchairRight"
-        speed = self.dialWheelchairSpeed.value()
+        speed = self.dialSpeed.value()
         self.wheelchair.sendCommand(speed, 'right')
 	
     def stopWheelchair(self):
         #print "stopWheelchair"
-        speed = self.dialWheelchairSpeed.value()
+        speed = self.dialSpeed.value()
         self.wheelchair.sendCommand(speed, 'stop')
     
 
@@ -720,24 +720,42 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     def  selectLeftKeys(self):
 
         # blue button
-        self.repaintKeys
+
+        # blue
+        self.keyboardA.setStyleSheet("background-color: rgb(112, 174, 255);")
+        self.keyboardD.setStyleSheet("background-color: rgb(255, 115, 80);")
+        #self.groupBox_keyboard.update()
+        
+        #self.repaintKeys()
 
     #####################################################################
 
     def  selectRightKeys(self):
 
         # red button
-        self.repaintKeys
+        '''
+        # red
+        self.keyboardD.setStyleSheet("background-color: rgb(255, 115, 80);")
+        self.keyboardD.update()
+        '''
+        self.repaintKeys()
 
     #####################################################################
 
     def  repaintKeys(self):
 
+        self.keyboardA.setStyleSheet("")
+        self.keyboardD.setStyleSheet("")
+        
+        '''
         # red
-        self.keyboardA.setStyleSheet(_fromUtf8("background-color: rgb(255, 115, 80);"))
+        self.keyboardD.setStyleSheet("background-color: rgb(255, 115, 80);")
+        self.keyboardD.update()
 
         # blue
-        self.keyboardD.setStyleSheet(_fromUtf8("background-color: rgb(112, 174, 255);"))
+        self.keyboardA.setStyleSheet("background-color: rgb(112, 174, 255);")
+        self.keyboardA.update()
+        '''
 
     #####################################################################
 
@@ -746,7 +764,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         quit_message = "Are you sure you want to exit the program?"
         
         reply = QtGui.QMessageBox.question(self, \
-                                           'Quit C6 Capstone', \
+                                           'Quit Capstone C6', \
                                            quit_message, \
                                            QtGui.QMessageBox.Yes, \
                                            QtGui.QMessageBox.No)

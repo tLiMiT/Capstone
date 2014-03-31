@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'demoGUI.ui'
 #
-# Created: Thu Mar 27 12:18:42 2014
+# Created: Mon Mar 31 13:36:39 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -42,7 +42,8 @@ class Ui_Form(object):
         self.groupBox_Speed.setObjectName(_fromUtf8("groupBox_Speed"))
         self.dialSpeed = QtGui.QDial(self.groupBox_Speed)
         self.dialSpeed.setGeometry(QtCore.QRect(30, 60, 241, 201))
-        self.dialSpeed.setMaximum(2)
+        self.dialSpeed.setInvertedAppearance(False)
+        self.dialSpeed.setInvertedControls(False)
         self.dialSpeed.setNotchesVisible(True)
         self.dialSpeed.setObjectName(_fromUtf8("dialSpeed"))
         self.label_4 = QtGui.QLabel(self.groupBox_Speed)
@@ -50,7 +51,7 @@ class Ui_Form(object):
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.label_5 = QtGui.QLabel(self.groupBox_Speed)
-        self.label_5.setGeometry(QtCore.QRect(190, 250, 53, 16))
+        self.label_5.setGeometry(QtCore.QRect(200, 250, 53, 16))
         self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setObjectName(_fromUtf8("label_5"))
         self.label_6 = QtGui.QLabel(self.groupBox_Speed)
@@ -632,7 +633,7 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Capstone C6", None))
         self.groupBox_Speed.setTitle(_translate("Form", "Wheelchair Speed", None))
         self.label_4.setText(_translate("Form", "Stopped", None))
-        self.label_5.setText(_translate("Form", "Normal", None))
+        self.label_5.setText(_translate("Form", "Maximum", None))
         self.label_6.setText(_translate("Form", "Slow", None))
         self.groupBox_Drive.setTitle(_translate("Form", "Wheelchair Control", None))
         self.labelWheelchairStatus.setText(_translate("Form", "Status: ", None))
