@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'demoGUI.ui'
 #
-# Created: Mon Mar 31 13:36:39 2014
+# Created: Tue Apr 01 12:29:55 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -112,6 +112,7 @@ class Ui_Form(object):
         self.tabMessage.setObjectName(_fromUtf8("tabMessage"))
         self.groupBox_keyboard = QtGui.QGroupBox(self.tabMessage)
         self.groupBox_keyboard.setGeometry(QtCore.QRect(40, 160, 1021, 451))
+        self.groupBox_keyboard.setStyleSheet(_fromUtf8("background-color: rgb(112, 174, 255);"))
         self.groupBox_keyboard.setObjectName(_fromUtf8("groupBox_keyboard"))
         self.keyboardQ = QtGui.QPushButton(self.groupBox_keyboard)
         self.keyboardQ.setGeometry(QtCore.QRect(30, 120, 71, 71))
@@ -688,7 +689,7 @@ class Ui_Form(object):
         self.keyboardSlash.setText(_translate("Form", "/", None))
         self.keyboardComma.setText(_translate("Form", ",", None))
         self.keyboardSelectLeft.setText(_translate("Form", "Select", None))
-        self.keyboardSelectRight.setText(_translate("Form", "Select", None))
+        self.keyboardSelectRight.setText(_translate("Form", "Next", None))
         self.messageClearButton.setText(_translate("Form", "Clear", None))
         self.groupBox_message.setTitle(_translate("Form", "Message", None))
         self.messageSendButton.setText(_translate("Form", "Send", None))
@@ -714,14 +715,4 @@ class Ui_Form(object):
         self.selectPhoneCarrier.setItemText(2, _translate("Form", "T-Mobile", None))
         self.selectPhoneCarrier.setItemText(3, _translate("Form", "Verizon", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabControPanel), _translate("Form", "Control Panel", None))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    Form = QtGui.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())
 

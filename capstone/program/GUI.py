@@ -4,11 +4,15 @@
 
 import os, sys, time
 
-DEFAULT_IMAGE_PATH = 'images'
-import _winreg as winreg
-import itertools
-import re
-import serial
+if (sys.platform == 'win32'):
+    DEFAULT_IMAGE_PATH = 'images'
+    import _winreg as winreg
+    import itertools
+    import re
+    import serial
+else:
+    # We're fucked because I don't use Unix/Linux
+    DEFAULT_IMAGE_PATH = 'images'
 
 import Configuration as configuration
 
@@ -32,6 +36,10 @@ DEVICE_PATH = ''
 
 MESSAGE_DESTINATION = ''
 USER_MESSAGE = ''
+
+RED = "background-color: rgb(255, 115, 80);"
+BLUE = "background-color: rgb(112, 174, 255);"
+CLICKS = 1
 
 #####################################################################
 # CLASSES
@@ -719,12 +727,22 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  selectLeftKeys(self):
 
-        # blue button
+        if CLICKS == 1:
+            self.groupBox_keyboard.setStyleSheet("")
+            self.keyboardSelectRight.setText("Select")
 
-        # blue
-        self.keyboardA.setStyleSheet("background-color: rgb(112, 174, 255);")
-        self.keyboardD.setStyleSheet("background-color: rgb(255, 115, 80);")
-        #self.groupBox_keyboard.update()
+            # DO BECKER'S FANCYPANTS KEY STUFF HERE
+            
+        elif CLICKS == 2:
+            # send Backspace a click
+            self.keyboardBackspace.click()
+        elif CLICKS == 3:
+            # send Clear a click
+            self.messageClearButton.click()
+        elif CLICKS == 4:
+            # send Send a click
+            self.messageSendButton.click()
+        
         
         #self.repaintKeys()
 
@@ -732,13 +750,26 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  selectRightKeys(self):
 
-        # red button
-        '''
-        # red
-        self.keyboardD.setStyleSheet("background-color: rgb(255, 115, 80);")
-        self.keyboardD.update()
-        '''
-        self.repaintKeys()
+        global CLICKS
+
+        # loop through and change the style sheet based on what's selected
+        if CLICKS == 1:
+            self.groupBox_keyboard.setStyleSheet("")
+            self.keyboardBackspace.setStyleSheet(BLUE)
+        elif CLICKS == 2:
+            self.keyboardBackspace.setStyleSheet("")
+            self.messageClearButton.setStyleSheet(BLUE)
+        elif CLICKS == 3:
+            self.messageClearButton.setStyleSheet("")
+            self.messageSendButton.setStyleSheet(BLUE)
+        elif CLICKS == 4:
+            self.messageSendButton.setStyleSheet("")
+            self.groupBox_keyboard.setStyleSheet(BLUE)
+            CLICKS = 0
+
+        #self.repaintKeys()
+        
+        CLICKS = CLICKS +1
 
     #####################################################################
 
@@ -746,7 +777,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
         self.keyboardA.setStyleSheet("")
         self.keyboardD.setStyleSheet("")
-        
+        self.groupBox_keyboard.setStyleSheet("")
         '''
         # red
         self.keyboardD.setStyleSheet("background-color: rgb(255, 115, 80);")

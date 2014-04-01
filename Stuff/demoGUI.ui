@@ -279,6 +279,9 @@
        <height>451</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(112, 174, 255);</string>
+     </property>
      <property name="title">
       <string>Keyboard</string>
      </property>
@@ -1286,7 +1289,7 @@
        <string notr="true">background-color: rgb(255, 115, 80);</string>
       </property>
       <property name="text">
-       <string>Select</string>
+       <string>Next</string>
       </property>
      </widget>
      <widget class="QPushButton" name="messageClearButton">
