@@ -62,10 +62,10 @@ DRIVE_CONTROLS = {
 MOVE_COMANDS ={
     # might change this to WASD for 1337 skillz
     ' ' : 'stop',
-    'i' : 'fwd',
-    'm' : 'rev',
-    'j' : 'left',
-    'k' : 'right',
+    'w' : 'fwd',
+    's' : 'rev',
+    'a' : 'left',
+    'd' : 'right',
 		}
 
 SPEED_COMMANDS = {
@@ -82,7 +82,7 @@ ALARM_INTERVAL = 0.1
 # Classes
 #####################################################################
 
-class capstone_wheelchair_control(QtCore.QThread):
+class capstone_program_wheelchair_control(QtCore.QThread):
 
     def __init__(self, \
                  device_address=DEFAULT_SERIAL_DEVICE, \
@@ -211,7 +211,7 @@ class capstone_wheelchair_control(QtCore.QThread):
 
         print 'Output set to: ', output
         # might change to WASD
-        print 'commands to move: i, j, k, m, SPACE = stop, x = quit'
+        print 'commands to move: w, a, s, d, SPACE = stop, x = quit'
 
 
     def moveBot(self, dir, speed):
@@ -334,9 +334,9 @@ if __name__ == '__main__':
             command = each[ len("--command="): ]
             
     app = QtCore.QCoreApplication(sys.argv)
-    wheelchair = capstone_wheelchair_control(device_address=device, \
-                                             command=command, \
-                                             DEBUG=DEBUG)
+    wheelchair = capstone_program_wheelchair_control(device_address=device, \
+                                                     command=command, \
+                                                     DEBUG=DEBUG)
     wheelchair.start()
 
     sys.exit(app.exec_())

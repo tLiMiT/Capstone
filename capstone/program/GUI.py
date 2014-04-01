@@ -40,6 +40,7 @@ USER_MESSAGE = ''
 RED = "background-color: rgb(255, 115, 80);"
 BLUE = "background-color: rgb(112, 174, 255);"
 CLICKS = 1
+TYPING = False
 
 #####################################################################
 # CLASSES
@@ -122,10 +123,10 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
 	# initalize wheelchair control	
 	self.wheelchair = \
-	   wheelchair_control.capstone_program_wheelchair_control( \
-	      device_address=device,
-	      command=None, \
-	      DEBUG=self.DEBUG)
+                        wheelchair_control.capstone_program_wheelchair_control( \
+                            device_address=device, \
+                            command=None, \
+                            DEBUG=self.DEBUG)
 
         # set callbacks
 	self.disconnect(self.pushButtonDeviceConnect, \
@@ -454,13 +455,13 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         
         # set key select actions          
         action = QtGui.QAction(self)
-	action.setShortcut(QtGui.QKeySequence("a"))
+	action.setShortcut(QtGui.QKeySequence("q"))
 	self.connect(action, QtCore.SIGNAL("activated()"), self.keyboardSelectLeft, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
 		
 	action = QtGui.QAction(self)
-	action.setShortcut(QtGui.QKeySequence("d"))
+	action.setShortcut(QtGui.QKeySequence("e"))
 	self.connect(action, QtCore.SIGNAL("activated()"), self.keyboardSelectRight, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
@@ -727,67 +728,99 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  selectLeftKeys(self):
 
-        if CLICKS == 1:
-            self.groupBox_keyboard.setStyleSheet("")
-            self.keyboardSelectRight.setText("Select")
+        global TYPING
 
-            # DO BECKER'S FANCYPANTS KEY STUFF HERE
-            
-        elif CLICKS == 2:
-            # send Backspace a click
-            self.keyboardBackspace.click()
-        elif CLICKS == 3:
-            # send Clear a click
-            self.messageClearButton.click()
-        elif CLICKS == 4:
-            # send Send a click
-            self.messageSendButton.click()
+        if TYPING == True:
+            self.chooseBlue()
+            self.repaintKeys("clear")
+            self.keyboardSelectRight.setText("Next")
+            self.groupBox_keyboard.setStyleSheet(BLUE)
+            TYPING = False
+            return
+
+        if TYPING == False:
+
+            # loop through and click the selected button
+            if CLICKS == 1:
+                self.groupBox_keyboard.setStyleSheet("")
+                self.keyboardSelectRight.setText("Select")
+                TYPING = True
+
+                # DO BECKER'S FANCYPANTS KEY STUFF HERE
+                self.repaintKeys("color")
+                
+                
+                #TYPING = False
+                #self.keyboardSelectRight.setText("Next")
+            elif CLICKS == 2:
+                # send Backspace a click
+                self.keyboardBackspace.click()
+            elif CLICKS == 3:
+                # send Clear a click
+                self.messageClearButton.click()
+            elif CLICKS == 4:
+                # send Send a click
+                self.messageSendButton.click()
         
-        
-        #self.repaintKeys()
 
     #####################################################################
 
     def  selectRightKeys(self):
 
-        global CLICKS
+        global CLICKS, TYPING
 
-        # loop through and change the style sheet based on what's selected
-        if CLICKS == 1:
-            self.groupBox_keyboard.setStyleSheet("")
-            self.keyboardBackspace.setStyleSheet(BLUE)
-        elif CLICKS == 2:
-            self.keyboardBackspace.setStyleSheet("")
-            self.messageClearButton.setStyleSheet(BLUE)
-        elif CLICKS == 3:
-            self.messageClearButton.setStyleSheet("")
-            self.messageSendButton.setStyleSheet(BLUE)
-        elif CLICKS == 4:
-            self.messageSendButton.setStyleSheet("")
+        if TYPING == False:
+
+            # loop through and change the style sheet based on what's selected
+            if CLICKS == 1:
+                self.groupBox_keyboard.setStyleSheet("")
+                self.keyboardBackspace.setStyleSheet(BLUE)
+            elif CLICKS == 2:
+                self.keyboardBackspace.setStyleSheet("")
+                self.messageClearButton.setStyleSheet(BLUE)
+            elif CLICKS == 3:
+                self.messageClearButton.setStyleSheet("")
+                self.messageSendButton.setStyleSheet(BLUE)
+            elif CLICKS == 4:
+                self.messageSendButton.setStyleSheet("")
+                self.groupBox_keyboard.setStyleSheet(BLUE)
+                CLICKS = 0
+            
+            CLICKS = CLICKS +1
+            
+        elif TYPING == True:
+            self.chooseRed()
+            self.repaintKeys("clear")
+            self.keyboardSelectRight.setText("Next")
             self.groupBox_keyboard.setStyleSheet(BLUE)
-            CLICKS = 0
-
-        #self.repaintKeys()
-        
-        CLICKS = CLICKS +1
+            TYPING = False
+            return
 
     #####################################################################
 
-    def  repaintKeys(self):
+    def  repaintKeys(self, style):
 
-        self.keyboardA.setStyleSheet("")
-        self.keyboardD.setStyleSheet("")
-        self.groupBox_keyboard.setStyleSheet("")
-        '''
-        # red
-        self.keyboardD.setStyleSheet("background-color: rgb(255, 115, 80);")
-        self.keyboardD.update()
+        if style == 'clear':
+            self.keyboardA.setStyleSheet("")
+            self.keyboardD.setStyleSheet("")
+        elif style == 'color':
+            self.keyboardA.setStyleSheet(RED)
+            self.keyboardD.setStyleSheet(BLUE)
 
-        # blue
-        self.keyboardA.setStyleSheet("background-color: rgb(112, 174, 255);")
-        self.keyboardA.update()
-        '''
+    #####################################################################
 
+    def  chooseRed(self):
+
+        # A
+        self.keyboardA.click()
+
+    #####################################################################
+
+    def  chooseBlue(self):
+
+        # D
+        self.keyboardD.click()
+    
     #####################################################################
 
     def  closeEvent(self, event):
