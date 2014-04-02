@@ -39,8 +39,41 @@ USER_MESSAGE = ''
 
 RED = "background-color: rgb(255, 115, 80);"
 BLUE = "background-color: rgb(112, 174, 255);"
+BLANK = ""
 CLICKS = 1
 TYPING = False
+
+BLUE_KEYS = {}
+RED_KEYS = {}
+IMPORTED_KEYS = { \
+    ' ': True, \
+    'A': True, \
+    'B': True, \
+    'C': False, \
+    'D': True, \
+    'E': False, \
+    'F': True, \
+    'G': True, \
+    'H': False, \
+    'I': False, \
+    'J': True, \
+    'K': True, \
+    'L': True, \
+    'M': True, \
+    'N': False, \
+    'O': True, \
+    'P': True, \
+    'Q': True, \
+    'R': False, \
+    'S': False, \
+    'T': True, \
+    'U': False, \
+    'V': True, \
+    'W': True, \
+    'X': True, \
+    'Y': True, \
+    'Z': True, \
+    }
 
 #####################################################################
 # CLASSES
@@ -66,6 +99,59 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 		
 	self.drive_state = 'stop_motors'
 	self.current_speed = 0
+
+        # get the first instance of choices
+        self.selector = ti.ChoicePath(ti.huffmanAlgorithm(ti.LETTER_FREQ))
+
+	self.keyboardDict = { \
+            '1': self.keyboardNum1, \
+            '2': self.keyboardNum2, \
+            '3': self.keyboardNum3, \
+            '4': self.keyboardNum4, \
+            '5': self.keyboardNum5, \
+            '6': self.keyboardNum6, \
+            '7': self.keyboardNum7, \
+            '8': self.keyboardNum8, \
+            '9': self.keyboardNum9, \
+            '0': self.keyboardNum0, \
+            'A': self.keyboardA, \
+            'B': self.keyboardB, \
+            'C': self.keyboardC, \
+            'D': self.keyboardD, \
+            'E': self.keyboardE, \
+            'F': self.keyboardF, \
+            'G': self.keyboardG, \
+            'H': self.keyboardH, \
+            'I': self.keyboardI, \
+            'J': self.keyboardJ, \
+            'K': self.keyboardK, \
+            'L': self.keyboardL, \
+            'M': self.keyboardM, \
+            'N': self.keyboardN, \
+            'O': self.keyboardO, \
+            'P': self.keyboardP, \
+            'Q': self.keyboardQ, \
+            'R': self.keyboardR, \
+            'S': self.keyboardS, \
+            'T': self.keyboardT, \
+            'U': self.keyboardU, \
+            'V': self.keyboardV, \
+            'W': self.keyboardW, \
+            'X': self.keyboardX, \
+            'Y': self.keyboardY, \
+            'Z': self.keyboardZ, \
+            ',': self.keyboardComma, \
+            '.': self.keyboardPeriod, \
+            "'": self.keyboardApostrophe, \
+            '?': self.keyboardQuestionMark, \
+            '(': self.keyboardLeftParen, \
+            ')': self.keyboardRightParen, \
+            ':': self.keyboardColon, \
+            ';': self.keyboardSemiColon, \
+            '!': self.keyboardExclamationMark, \
+            '/': self.keyboardSlash, \
+            ' ': self.keyboardSpace, \
+        }
 
     #####################################################################
 
@@ -731,8 +817,11 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         global TYPING
 
         if TYPING == True:
-            self.chooseBlue()
-            self.repaintKeys("clear")
+
+            # select the blue keys
+            self.chooseKeys(self.keyboardD, False)
+            
+            self.repaintKeys(self.keyboardDict.values(), BLANK)
             self.keyboardSelectRight.setText("Next")
             self.groupBox_keyboard.setStyleSheet(BLUE)
             TYPING = False
@@ -742,16 +831,14 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
             # loop through and click the selected button
             if CLICKS == 1:
-                self.groupBox_keyboard.setStyleSheet("")
+                self.groupBox_keyboard.setStyleSheet(BLANK)
                 self.keyboardSelectRight.setText("Select")
                 TYPING = True
 
                 # DO BECKER'S FANCYPANTS KEY STUFF HERE
-                self.repaintKeys("color")
+                self.repaintKeys(RED_KEYS, RED)
+                self.repaintKeys(BLUE_KEYS, BLUE)
                 
-                
-                #TYPING = False
-                #self.keyboardSelectRight.setText("Next")
             elif CLICKS == 2:
                 # send Backspace a click
                 self.keyboardBackspace.click()
@@ -773,24 +860,27 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
             # loop through and change the style sheet based on what's selected
             if CLICKS == 1:
-                self.groupBox_keyboard.setStyleSheet("")
+                self.groupBox_keyboard.setStyleSheet(BLANK)
                 self.keyboardBackspace.setStyleSheet(BLUE)
             elif CLICKS == 2:
-                self.keyboardBackspace.setStyleSheet("")
+                self.keyboardBackspace.setStyleSheet(BLANK)
                 self.messageClearButton.setStyleSheet(BLUE)
             elif CLICKS == 3:
-                self.messageClearButton.setStyleSheet("")
+                self.messageClearButton.setStyleSheet(BLANK)
                 self.messageSendButton.setStyleSheet(BLUE)
             elif CLICKS == 4:
-                self.messageSendButton.setStyleSheet("")
+                self.messageSendButton.setStyleSheet(BLANK)
                 self.groupBox_keyboard.setStyleSheet(BLUE)
                 CLICKS = 0
             
             CLICKS = CLICKS +1
             
         elif TYPING == True:
-            self.chooseRed()
-            self.repaintKeys("clear")
+
+            # select the red keys
+            self.chooseKeys(self.keyboardA, True)
+            
+            self.repaintKeys(self.keyboardDict.values(), BLANK)
             self.keyboardSelectRight.setText("Next")
             self.groupBox_keyboard.setStyleSheet(BLUE)
             TYPING = False
@@ -798,28 +888,45 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     #####################################################################
 
-    def  repaintKeys(self, style):
+    def  repaintKeys(self, keys, color):
 
+        # paints the given keys the selected color
+        for i in keys:
+            i.setStyleSheet(color)
+
+        '''
         if style == 'clear':
-            self.keyboardA.setStyleSheet("")
-            self.keyboardD.setStyleSheet("")
+            for i in self.keyboardDict.values():
+                i.setStyleSheet(BLANK)
         elif style == 'color':
-            self.keyboardA.setStyleSheet(RED)
-            self.keyboardD.setStyleSheet(BLUE)
+            for i in self.keyboardDict.values():
+                #if :
+                    i.setStyleSheet(RED)
+                #if :
+                    i.setStyleSheet(BLUE)
+        '''
+        
+    #####################################################################
+
+    def  chooseKeys(self, keys, choice):
+
+        if choice:
+            keys.click()
+
+        else:
+            keys.click()
 
     #####################################################################
 
-    def  chooseRed(self):
+    def mapKeys(self):
 
-        # A
-        self.keyboardA.click()
+        global IMPORTED_KEYS, BLUE_KEYS, RED_KEYS
+
+        temp = 
 
     #####################################################################
 
-    def  chooseBlue(self):
-
-        # D
-        self.keyboardD.click()
+    #
     
     #####################################################################
 
