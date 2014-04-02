@@ -1,0 +1,12 @@
+http://www.py2exe.org/index.cgi/Tutorial
+
+open command prompt
+
+cd to directory
+
+run:
+python setup.py py2exe
+
+open dist folder
+
+run program-local.exe

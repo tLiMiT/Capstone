@@ -33,7 +33,7 @@
     <bool>false</bool>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tabDrive">
     <attribute name="title">
@@ -60,8 +60,11 @@
         <height>201</height>
        </rect>
       </property>
-      <property name="maximum">
-       <number>2</number>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+      <property name="invertedControls">
+       <bool>false</bool>
       </property>
       <property name="notchesVisible">
        <bool>true</bool>
@@ -86,14 +89,14 @@
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>200</x>
         <y>250</y>
         <width>53</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
-       <string>Normal</string>
+       <string>Maximum</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -275,6 +278,9 @@
        <width>1021</width>
        <height>451</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(112, 174, 255);</string>
      </property>
      <property name="title">
       <string>Keyboard</string>
@@ -1200,7 +1206,7 @@
        <string>)</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="keyboardSlash">
+     <widget class="QPushButton" name="keyboardSlasheee">
       <property name="geometry">
        <rect>
         <x>920</x>
@@ -1238,6 +1244,72 @@
       </property>
       <property name="text">
        <string>,</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="keyboardSelectLeft">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>360</y>
+        <width>151</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(112, 174, 255);</string>
+      </property>
+      <property name="text">
+       <string>Select</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="keyboardSelectRight">
+      <property name="geometry">
+       <rect>
+        <x>670</x>
+        <y>360</y>
+        <width>151</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 115, 80);</string>
+      </property>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="messageClearButton">
+      <property name="geometry">
+       <rect>
+        <x>840</x>
+        <y>360</y>
+        <width>151</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Clear</string>
       </property>
      </widget>
     </widget>
@@ -1483,7 +1555,7 @@
        <x>540</x>
        <y>50</y>
        <width>241</width>
-       <height>171</height>
+       <height>211</height>
       </rect>
      </property>
      <property name="title">
@@ -1513,7 +1585,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>80</y>
+        <y>120</y>
         <width>201</width>
         <height>31</height>
        </rect>
@@ -1535,7 +1607,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>130</y>
+        <y>170</y>
         <width>71</width>
         <height>28</height>
        </rect>
@@ -1548,7 +1620,7 @@
       <property name="geometry">
        <rect>
         <x>120</x>
-        <y>130</y>
+        <y>170</y>
         <width>101</width>
         <height>28</height>
        </rect>
@@ -1556,6 +1628,36 @@
       <property name="text">
        <string>Set Destination</string>
       </property>
+     </widget>
+     <widget class="QComboBox" name="selectPhoneCarrier">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>201</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>AT&amp;T</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Sprint</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>T-Mobile</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Verizon</string>
+       </property>
+      </item>
      </widget>
     </widget>
    </widget>

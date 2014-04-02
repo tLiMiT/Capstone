@@ -1,0 +1,3 @@
+PyQt4
+pyserial - serial
+py2exe

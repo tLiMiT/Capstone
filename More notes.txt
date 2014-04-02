@@ -1,0 +1,12 @@
+Puzzlebox Brainstorms == capstone program
+capstone  program
+
+-------------------------------------------------
+
+For changing button color look into style sheets:
+
+EX:		testbutton.setStyleSheet('QPushButton {color: blue}')
+
+Right Select:	background-color: rgb(255, 115, 80);
+
+Left Select:	background-color: rgb(112, 174, 255);

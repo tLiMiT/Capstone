@@ -12,7 +12,7 @@ DEBUG = 1
 
 ENABLE_CONTROL_PANEL = True
 
-CONFIGURATION_FILE_PATH = 'capstone_configuration.ini'
+CONFIGURATION_FILE_PATH = 'capstone_program_configuration.ini'
 
 if (sys.platform != 'win32'):
     if not os.path.exists(CONFIGURATION_FILE_PATH):
