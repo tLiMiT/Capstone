@@ -7,6 +7,7 @@ email = 'nucapstonec6@gmail.com'
 pswd = 'projectC6'
 number = '5082210266'
 
+# TODO - add exception handlers
 def sendMessage(toNumber, message):
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()

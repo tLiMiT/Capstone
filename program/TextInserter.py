@@ -1,7 +1,12 @@
-# Stub character percentages
-# from http://www.data-compression.com/english.html
-#
 
+
+
+###################################################
+#### Category: Constant
+# A dummy list of characters and probabilities
+# used for testing and examples. Character percentages
+# from http://www.data-compression.com/english.html
+###################################################
 LETTER_FREQ = {
 	('a',): 0.0651738,
 	('b',): 0.0124248,
@@ -33,10 +38,13 @@ LETTER_FREQ = {
 	}
 
 
+###################################################
+#### Category: Core Function
 # Takes in dictionary of characters & respective probabilities, and returns
 #   a dictionary of those characters huffman-coded
 #   (writes code in True-False values in inverted order. That is, first branch
 #   is last element.)
+###################################################
 custom_sort = lambda x: (x[1], len(x[0]))
 def huffmanAlgorithm(dict_charProb):
 	list_charProb = sorted(
@@ -65,6 +73,11 @@ def huffmanAlgorithm(dict_charProb):
 	
 	return dict_hCode
 
+###################################################
+#### Category: Core Class
+# Implements the Huffman Algorithm. Divides choices
+#	based on previous selections.
+###################################################
 class ChoicePath:
     def __init__(self, d):
         self.hCode = d

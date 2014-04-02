@@ -111,7 +111,6 @@ READWRITE_RAW = (readFreq_raw, writeFreq_raw)
 ##################### Binary Reader/Writer ###################
 ##############################################################
 from array import array
-
 num_precision = 'f'
 
 def writeFreq_binary(filename, dict_freq):
@@ -142,47 +141,57 @@ def readFreq_binary(filename):
 	return temp_dict
 		
 READWRITE_BINARY = (readFreq_binary, writeFreq_binary)
+
+
 #################### Escape Key Converter ####################
 # Escape to Legible - str.encode('string_escape')
-# Legible to Escape - str.encode('string_escape')
+# Legible to Escape - str.decode('string_escape')
 
 ##############################################################
 #################### Frequency File Updater ##################
 ##############################################################
 # dict_freq - a dictionary list
 #	keys - letters observed in message
-#	values - number of occurences in messages (NOT %)
+#	values - count of occurences in messages (NOT %)
 def updateFreq(filename, func_ReadWrite, dict_freq):
+	# Reads old dictionary from file
 	old_dict = {}
 	try:
 		old_dict = func_ReadWrite[0](filename)
 	except IOError as e:
-		# Check file existence
+		# Check file existence (non-existence is NOT fatal)
 		if e.errno == errno.ENOENT:
 			pass
+		# Other errors are unforseen
 		else:
 			raise e
 	
+	# Creates relative weights of message significance
 	size1 = sum(dict_freq.values())
 	size2 = half_life
 	
+	# Creates new dictionary, augmented with new data results
 	new_dict = {}
 	for char in char_order:
 		new_dict[(char,)] = 0
+		# Scales down significance of new data
+		#	(divide by size1 to convert count value to percentage)
 		if (char,) in dict_freq:
 			new_dict[(char,)] += dict_freq[(char,)] * (1.0 / (size1+size2))
+		# Scales down significance of original data
+		#	(values already in percentage form)
 		if (char,) in old_dict:
 			new_dict[(char,)] += old_dict[(char,)] * (size2 / (size1+size2))
 
-	for cntr in range(2):
-		func_ReadWrite[1](filename, new_dict)
-		test = func_ReadWrite[0](filename)
-		if test == new_dict:
-			break
-		elif cntr == 1:
-			print 'Error: write to binary failed'
+	func_ReadWrite[1](filename, new_dict)
 
-def logMessageFreq(message, func_ReadWrite):
+##############################################################
+################## Message Frequency Counter #################
+##############################################################
+#### Category: Core Function
+# Cycles through message and counts all conditional character 
+#	occurrences in the message.
+def countMessageFreq(message):
 	# Pre-analysis formatting
 	message = '\x02' + message
 	# TODO - accomodate caps setting
@@ -195,27 +204,54 @@ def logMessageFreq(message, func_ReadWrite):
 			if substr not in cond_freq:
 				cond_freq[substr] = {}
 			if (next,) not in cond_freq[substr]:
-				cond_freq[substr][(next,)] = 0
-			cond_freq[substr][(next,)] += 1
+				cond_freq[substr][(next,)] = 1
+			else:
+				cond_freq[substr][(next,)] += 1
+	
+	return cond_freq
+
+
+##############################################################
+################## Message Frequency Logger ##################
+##############################################################
+#### Category: Core Function
+# Uses countMessageFreq to count the conditional probabilities
+#	of the message. Then, it uses updateFreq for each
+#	conditional string to incorporate the conditional 
+#	character counts into each respective conditional
+#	character probability file.
+
+def logMessageFreq(message, func_ReadWrite):
+	cond_freq = countMessageFreq(message)
 	
 	# Update/Create probability profile for each conditional string
 	for cond in cond_freq:
 		tmp = [str(ord(sub)) for sub in cond]
-		tmp = [ '0'*(3-len(s)) + s for s in tmp]
+		tmp = ['0'*(3-len(s)) + s for s in tmp]
 		filename = bin_prefix \
 			+ (''.join(tmp) if tmp else code_default) \
 			+ bin_extension
 		updateFreq(filename, func_ReadWrite, cond_freq[cond])
 
+##############################################################
+###################### Frequency Getter ######################
+##############################################################
+#### Category: Core Function
+# Reads the conditional frequency from data files on disk in
+#	the local directory. Returns a dictionary of the
+#	conditional probabilities.
 def getCondFreq(cond, func_ReadWrite):
 	code = None
 	if len(cond) == 0:
 		code = code_default
 	else:
+		# Code the conditional string into the decimal values
+		#	for each ASCII character
 		tmp = [str(ord(sub)) for sub in cond]
-		tmp = [ '0'*(3-len(s)) + s for s in tmp]
+		tmp = ['0'*(3-len(s)) + s for s in tmp]
 		code = ''.join(tmp)
 	
+	# Initializes probability dictionary to zero prob.'s
 	new_dict = { (char,):0 for char in char_order }
 	tmp_dict = None
 	while True:
@@ -223,7 +259,7 @@ def getCondFreq(cond, func_ReadWrite):
 		try:
 			tmp_dict = func_ReadWrite[0](makefilename(code))
 		except IOError as e:
-			# Check file existence
+			# Check file existence (non-existence is NOT fatal)
 			if e.errno == errno.ENOENT:
 				print 'could not find file: ' + makefilename(code)
 			else:

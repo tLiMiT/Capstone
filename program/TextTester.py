@@ -3,10 +3,18 @@ from TextInserter import *
 from MessageSender import *
 import os
 
+###################################################
+### Category: Terminal UI
+# Clears the screen when operating in Terminal
+###################################################
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-
+###################################################
+### Category: Terminal UI
+# Takes keys typed from terminal, and converts to 
+# binary true/false values
+###################################################
 def binaryChoice():
     while True:
         temp = raw_input('')
@@ -15,9 +23,17 @@ def binaryChoice():
         elif (temp[0]).lower() == 's':
             return False
 
+###################################################
+### Category: Terminal UI
+# Outputs description of accepted input commands
+###################################################
 def printBinaryControls(ml, mr):
     print '(A = ' + ml + '\tS = ' + mr + ')'
 
+###################################################
+### Category: Terminal UI
+# Converts letter choices into readable equivalents
+###################################################
 def letterFilter(letter):
     if letter == ' ':
         return '_'
@@ -25,6 +41,11 @@ def letterFilter(letter):
         return letter
 
 
+###################################################
+### Category: Terminal UI
+# Prints all remaining possible character choices 
+# into two divided columns
+###################################################
 def printChoices(choices):
     print 'Left\tRight'
     for c in sorted(choices.items()):
@@ -34,9 +55,20 @@ def printChoices(choices):
             print '\t' + letterFilter(c[0])
 
 
-def textInserter_messageSender_TestHarness():
+###################################################
+### Category: Test Harness
+# Tests the basic functionality of the Huffman 
+# Algorithm, implementing letter selection through 
+# binary choices, and implementing the message 
+# sender.
+###################################################
+def TestHarness1():
+    # Clears screen
     clear()
+    ###### Creates Local Variables #####
+    # Creates Huffman code for character choices
     selector = ChoicePath(huffmanAlgorithm(LETTER_FREQ))
+    # Sets initial message as blank
     message = ''
     prompt = 'Enter a text message'
     
@@ -64,9 +96,11 @@ def textInserter_messageSender_TestHarness():
                 while selector.getChoiceCount() >1:
                     clear()
                     printChoices(selector.splitChoices())
-                    printBinaryControls('select left column','select right column')
+                    printBinaryControls(\
+			'select left column',\
+			'select right column')
                     selector.select(binaryChoice())
-                message = message + selector.getChoices().keys()[0]
+                message = message + selector.getChoices()[0]
                 selector.reset()
             elif option_counter == 1:
                 message = message[:-1]
@@ -77,9 +111,11 @@ def textInserter_messageSender_TestHarness():
                 return message
             else:
                 pass
+            option_counter = 0
         else:
             option_counter += 1
             option_counter %= len(menu_options)
 
 
 textInserter_messageSender_TestHarness()
+
