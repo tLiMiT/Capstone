@@ -57,6 +57,7 @@ if (sys.platform == 'win32'):
                       "images/left.svg", \
                       "images/right.svg", \
                       "images/stop.svg", \
+                      "images/CharFreqBinary_f_base.bin"
                       ]),
                     ]
     

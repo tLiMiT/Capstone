@@ -27,6 +27,8 @@ import MessageSender as ms
 import TextInserter as ti
 import CharacterFreqLogger as cfl
 
+#cfl.directory = "C:\\Users\\Tim\\Documents\\GitHub\\Capstone\\capstone\\program"
+
 #####################################################################
 # GLOBALS
 #####################################################################
@@ -48,7 +50,8 @@ CHOICE = False
 BLUE_KEYS = {}
 RED_KEYS = {}
 TX_KEYS = {}
-IMPORTED_KEYS = { \
+IMPORTED_KEYS = {}
+'''\
     '1': False, \
     '2': False, \
     '3': False, \
@@ -97,7 +100,7 @@ IMPORTED_KEYS = { \
     '/': False, \
     ' ': True, \
     }
-
+'''
 #####################################################################
 # CLASSES
 #####################################################################
@@ -124,6 +127,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.current_speed = 0
 	
         # add Becker's stuff
+        
         temp = cfl.getCondFreq('', cfl.READWRITE_BINARY)
         self.selector = ti.ChoicePath(ti.huffmanAlgorithm(temp))
 
@@ -858,8 +862,10 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
             else:
                 self.repaintKeys(RED_KEYS, BLANK)
-                # send TX_KEYS
+                # 
+                self.selector.select(False)
                 # fill IMPORTED_KEYS
+                IMPORTED_KEYS = self.selector.splitChoices()
                 self.mapKeys(IMPORTED_KEYS)
 
         if TYPING == False:
@@ -873,7 +879,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
                 ## DO BECKER'S FANCYPANTS KEY STUFF HERE ##
                 # fill IMPORTED_KEYS
-                
+                IMPORTED_KEYS = self.selector.splitChoices()
 
                 # separate IMPORTED_KEYS into red and blue choices
                 self.mapKeys(IMPORTED_KEYS)
@@ -948,8 +954,10 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             
             else:
                 self.repaintKeys(BLUE_KEYS, BLANK)
-                # send TX_KEYS
+                #
+                self.selector.select(True)
                 # fill IMPORTED_KEYS
+                IMPORTED_KEYS = self.selector.splitChoices()
                 self.mapKeys(IMPORTED_KEYS)
 
     #####################################################################
@@ -966,16 +974,11 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
         global CHOICE, TX_KEYS, IMPORTED_KEYS
 
-        if len(keys) == 1:
+        if self.selector.getChoiceCount() == 1:
             CHOICE = True
 
             # send click
             keys.click()
-            
-        else:
-            # set IMPORTED_KEYS to the selected keys
-            TX_KEYS = keys
-            IMPORTED_KEYS = {}
 
     #####################################################################
 
