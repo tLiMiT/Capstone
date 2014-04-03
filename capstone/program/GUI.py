@@ -27,8 +27,10 @@ import MessageSender as ms
 import TextInserter as ti
 import CharacterFreqLogger as cfl
 
+
 # MAKE SURE TO CHANGE THIS FOR EACH COMPUTER
 cfl.directory = 'C:\\Users\\Tim\\Documents\\GitHub\\Capstone\\capstone\\program\\'
+
 
 #####################################################################
 # GLOBALS
@@ -47,61 +49,11 @@ BLANK = ""
 
 CLICKS = 1
 TYPING = False
-CHOICE = False
 
 BLUE_KEYS = {}
 RED_KEYS = {}
 IMPORTED_KEYS = {}
-'''\
-    '1': False, \
-    '2': False, \
-    '3': False, \
-    '4': False, \
-    '5': False, \
-    '6': False, \
-    '7': False, \
-    '8': False, \
-    '9': False, \
-    '0': False, \
-    'A': True, \
-    'B': True, \
-    'C': False, \
-    'D': True, \
-    'E': False, \
-    'F': True, \
-    'G': True, \
-    'H': False, \
-    'I': False, \
-    'J': True, \
-    'K': True, \
-    'L': True, \
-    'M': True, \
-    'N': False, \
-    'O': True, \
-    'P': True, \
-    'Q': True, \
-    'R': False, \
-    'S': False, \
-    'T': True, \
-    'U': False, \
-    'V': True, \
-    'W': True, \
-    'X': True, \
-    'Y': True, \
-    'Z': True, \
-    ',': False, \
-    '.': False, \
-    "'": False, \
-    '?': False, \
-    '(': False, \
-    ')': False, \
-    ':': False, \
-    ';': False, \
-    '!': False, \
-    '/': False, \
-    ' ': True, \
-    }
-'''
+
 #####################################################################
 # CLASSES
 #####################################################################
@@ -841,7 +793,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  selectLeftKeys(self):
 
-        global TYPING, CHOICE, IMPORTED_KEYS
+        global TYPING, IMPORTED_KEYS
 
         if TYPING == True:
 
@@ -993,18 +945,6 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         for i in keys:
             i.setStyleSheet(color)
         
-    #####################################################################
-
-    def  chooseKeys(self, keys):
-
-        global CHOICE
-        
-        if len(keys) == 1:
-            CHOICE = True
-            
-            # send click
-            keys.click()
-
     #####################################################################
 
     def mapKeys(self, keys):
