@@ -13,6 +13,53 @@ bin_extension = '.bin'
 half_life = 16000.0
 max_mem = 3
 
+CHAR_ORDER = ['\n', ' ', '!', '"', '#', '$', '%', '&', "'", 
+	'(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', 
+	'3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', 
+	'>', '?', '@', 'C', '[', '\\', ']', '^', '_', '`', 'a', 
+	'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 
+	'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 
+	'x', 'y', 'z', '{', '|', '}', '~']
+
+char_order = CHAR_ORDER
+
+def getCharOrder(filename, decode=True):
+	global char_order
+	list = []
+	with open(filename, 'rb') as csvfile:
+		csvReader = csv.reader(csvfile)
+		for row in csvReader:
+			if len(row) == 1:
+				list.append(row[0])
+			else:
+				print 'Invalid Row:'
+				for i in row:
+					print i
+	if decode:
+		list = [ x.decode('string_escape') for x in list ]
+	
+	char_order = list
+
+def saveCharOrder(filename, encode=True):
+	# Checks form of dictionary keys: strings? tuple of strings?
+	list = char_order
+	if type( list[0] ) is tuple:
+		if type( list[0][0] ) is not str:
+			pass	#error!!!
+	elif type( list[0] ) is str:
+		list = [(x,) for x in list]
+	else:
+		pass	#error!!!
+	
+	# Encodes escape characters
+	if encode:
+		list = [ (x[0].encode('string_escape'),) for x in list ]
+	
+	with open(filename, 'wb') as csvfile:
+		csvWriter = csv.writer(csvfile)
+		csvWriter.writerows( list )
+	
+
 def makefilename(base):
 	return bin_prefix + base + bin_extension
 
@@ -62,16 +109,6 @@ READWRITE_STANDARD = (readFreq, writeFreq)
 #################### CSV Raw Reader/Writer ###################
 ##############################################################
 
-char_order = ['\n', ' ', '!', '"', '#', '$', '%', '&', "'", 
-	'(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', 
-	'3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', 
-	'>', '?', '@', 'C', '[', '\\', ']', '^', '_', '`', 'a', 
-	'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 
-	'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 
-	'x', 'y', 'z', '{', '|', '}', '~']
-
-
-##############################################################
 def writeFreq_raw(filename, dict_freq):
 	# Checks form of dictionary keys: strings? tuple of strings?
 	if type( dict_freq.keys()[0] ) is tuple:
@@ -186,15 +223,32 @@ def updateFreq(filename, func_ReadWrite, dict_freq):
 	func_ReadWrite[1](filename, new_dict)
 
 ##############################################################
+################ Char-to-Cond.-Code Converter ################
+##############################################################
+#### Category: Text Manipulation shorthand
+# Converts a string of characters (which may not be valid in
+#	file names) into a string of their respective hex numbers. 
+code_unit = 2
+def cond_char2code(cond_str):
+	# Converts ASCII characters to the string representation
+	#	of their hex value, then removes the "0x" prefix
+	cond_str = [ hex(ord(sub)).split('x')[1] for sub in cond_str ]
+	# Adds zeros to make each number 2 characters long
+	cond_str = ['0'*(code_unit-len(sub)) + sub for sub in cond_str]
+	# Concatenates, then returns result
+	return ''.join(cond_str)
+
+##############################################################
 ################## Message Frequency Counter #################
 ##############################################################
 #### Category: Core Function
 # Cycles through message and counts all conditional character 
 #	occurrences in the message.
+# (Note - For accommodating the caps-lock key, format message
+#	before sending through this function.)
 def countMessageFreq(message):
 	# Pre-analysis formatting
 	message = '\x02' + message
-	# TODO - accomodate caps setting
 	
 	cond_freq = {}
 	for length in range(max_mem+1):
@@ -209,7 +263,6 @@ def countMessageFreq(message):
 				cond_freq[substr][(next,)] += 1
 	
 	return cond_freq
-
 
 ##############################################################
 ################## Message Frequency Logger ##################
@@ -226,11 +279,8 @@ def logMessageFreq(message, func_ReadWrite):
 	
 	# Update/Create probability profile for each conditional string
 	for cond in cond_freq:
-		tmp = [str(ord(sub)) for sub in cond]
-		tmp = ['0'*(3-len(s)) + s for s in tmp]
-		filename = bin_prefix \
-			+ (''.join(tmp) if tmp else code_default) \
-			+ bin_extension
+		tmp = cond_char2code(cond)
+		filename = makefilename(tmp if tmp else code_default)
 		updateFreq(filename, func_ReadWrite, cond_freq[cond])
 
 ##############################################################
@@ -241,15 +291,7 @@ def logMessageFreq(message, func_ReadWrite):
 #	the local directory. Returns a dictionary of the
 #	conditional probabilities.
 def getCondFreq(cond, func_ReadWrite):
-	code = None
-	if len(cond) == 0:
-		code = code_default
-	else:
-		# Code the conditional string into the decimal values
-		#	for each ASCII character
-		tmp = [str(ord(sub)) for sub in cond]
-		tmp = ['0'*(3-len(s)) + s for s in tmp]
-		code = ''.join(tmp)
+	code = (cond_char2code(cond) if cond else code_default)
 	
 	# Initializes probability dictionary to zero prob.'s
 	new_dict = { (char,):0 for char in char_order }
@@ -274,7 +316,7 @@ def getCondFreq(cond, func_ReadWrite):
 		if code == code_default:
 			break
 		else:
-			code = (code[3:] if len(code)<=3 else code_default)
+			code = (code[code_unit:] if len(code)<=code_unit else code_default)
 	
 	return new_dict
 

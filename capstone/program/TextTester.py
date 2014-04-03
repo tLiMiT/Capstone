@@ -116,6 +116,4 @@ def TestHarness1():
             option_counter += 1
             option_counter %= len(menu_options)
 
-
-textInserter_messageSender_TestHarness()
-
+TestHarness1()

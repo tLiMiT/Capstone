@@ -84,6 +84,11 @@ class ChoicePath:
         self.hChoices = d
         self.cntr = 0
     
+    def setCode(self, d):
+        self.hCode = d
+        self.hChoices = d
+        self.cntr = 0
+    
     def getChoices(self):
         return self.hChoices.keys()
     
