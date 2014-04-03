@@ -302,6 +302,8 @@ def getCondFreq(cond, func_ReadWrite):
 		except IOError as e:
 			# Check file existence (non-existence is NOT fatal)
 			if e.errno == errno.ENOENT:
+				if code == code_default:
+					raise e
 				print 'could not find file: ' + makefilename(code)
 			else:
 				raise e
