@@ -2,7 +2,7 @@
 #
 #
 
-import os, sys, time
+import os, sys
 
 if (sys.platform == 'win32'):
     DEFAULT_IMAGE_PATH = 'images'
@@ -44,13 +44,13 @@ USER_MESSAGE = ''
 RED = "background-color: rgb(255, 115, 80);"
 BLUE = "background-color: rgb(112, 174, 255);"
 BLANK = ""
+
 CLICKS = 1
 TYPING = False
 CHOICE = False
 
 BLUE_KEYS = {}
 RED_KEYS = {}
-TX_KEYS = {}
 IMPORTED_KEYS = {}
 '''\
     '1': False, \
@@ -841,18 +841,21 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  selectLeftKeys(self):
 
-        global TYPING, CHOICE, TX_KEYS, IMPORTED_KEYS
+        global TYPING, CHOICE, IMPORTED_KEYS
 
         if TYPING == True:
 
-            # select the blue keys
+            # select the blue key(s)
             self.chooseKeys(BLUE_KEYS)
 
             if CHOICE:
-                # refresh dicts
-                TX_KEYS = {}
+                # send click
+                #BLUE_KEYS.click()
+                
+                # refresh dict
                 IMPORTED_KEYS = {}
                 
+                # prepare for a new round
                 self.repaintKeys(self.keyboardDict.values(), BLANK)
                 self.keyboardSelectRight.setText("Next")
                 self.groupBox_keyboard.setStyleSheet(BLUE)
@@ -862,12 +865,21 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                 return
 
             else:
+                # red keys are eliminated, set clear
                 self.repaintKeys(RED_KEYS, BLANK)
-                # 
+                
+                # split the blue keys
                 self.selector.select(False)
+                
                 # fill IMPORTED_KEYS
                 IMPORTED_KEYS = self.selector.splitChoices()
+
+                # separate new choices
                 self.mapKeys(IMPORTED_KEYS)
+                
+                # redraw
+                self.repaintKeys(BLUE_KEYS, BLUE)
+                self.repaintKeys(RED_KEYS, RED)
 
         if TYPING == False:
 
@@ -878,7 +890,6 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                 self.keyboardSelectRight.setText("Select")
                 CHOICE = False
 
-                ## DO BECKER'S FANCYPANTS KEY STUFF HERE ##
                 # fill IMPORTED_KEYS
                 IMPORTED_KEYS = self.selector.splitChoices()
 
@@ -906,7 +917,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  selectRightKeys(self):
 
-        global CLICKS, TYPING, TX_KEYS, IMPORTED_KEYS
+        global CLICKS, TYPING, IMPORTED_KEYS
 
         if TYPING == False:
 
@@ -937,14 +948,17 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             
         if TYPING == True:
 
-            # select the red keys
+            # select the red key(s)
             self.chooseKeys(RED_KEYS)
 
             if CHOICE:
-                # refresh dicts
-                TX_KEYS = {}
-                IMPORTED_KEYS = {}
+                # send click
+                #RED_KEYS.click()
                 
+                # refresh dict
+                IMPORTED_KEYS = {}
+
+                # prepare for a new round
                 self.repaintKeys(self.keyboardDict.values(), BLANK)
                 self.keyboardSelectRight.setText("Next")
                 self.groupBox_keyboard.setStyleSheet(BLUE)
@@ -954,12 +968,21 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                 return
             
             else:
+                # blue keys are eliminated, set clear
                 self.repaintKeys(BLUE_KEYS, BLANK)
-                #
+                
+                # split the red keys
                 self.selector.select(True)
+                
                 # fill IMPORTED_KEYS
                 IMPORTED_KEYS = self.selector.splitChoices()
+
+                # separate new choices
                 self.mapKeys(IMPORTED_KEYS)
+
+                # redraw
+                self.repaintKeys(BLUE_KEYS, BLUE)
+                self.repaintKeys(RED_KEYS, RED)
 
     #####################################################################
 
@@ -973,13 +996,13 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  chooseKeys(self, keys):
 
-        global CHOICE, TX_KEYS, IMPORTED_KEYS
+        global CHOICE
 
         if self.selector.getChoiceCount() == 1:
             CHOICE = True
 
             # send click
-            keys.click()
+            #keys.click()
 
     #####################################################################
 
