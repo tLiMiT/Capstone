@@ -1,3 +1,7 @@
-compile the ui file using: pyuic4 #ui file# -x -o #output.py#
-allows file to be run directly
+compile the ui file using: 
+
+pyuic4 "input.ui" -o "output.py"
+
+
+adding a (-x) flag allows the output file to be run directly
 
