@@ -60,6 +60,9 @@
         <height>201</height>
        </rect>
       </property>
+      <property name="singleStep">
+       <number>5</number>
+      </property>
       <property name="invertedAppearance">
        <bool>false</bool>
       </property>
@@ -1206,7 +1209,7 @@
        <string>)</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="keyboardSlasheee">
+     <widget class="QPushButton" name="keyboardSlash">
       <property name="geometry">
        <rect>
         <x>920</x>
@@ -1372,7 +1375,7 @@
      <string>Placeholder</string>
     </attribute>
    </widget>
-   <widget class="QWidget" name="tabControPanel">
+   <widget class="QWidget" name="tabControlPanel">
     <attribute name="title">
      <string>Control Panel</string>
     </attribute>

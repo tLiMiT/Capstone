@@ -42,11 +42,22 @@ BLUE = "background-color: rgb(112, 174, 255);"
 BLANK = ""
 CLICKS = 1
 TYPING = False
+CHOICE = False
 
 BLUE_KEYS = {}
 RED_KEYS = {}
+TX_KEYS = {}
 IMPORTED_KEYS = { \
-    ' ': True, \
+    '1': False, \
+    '2': False, \
+    '3': False, \
+    '4': False, \
+    '5': False, \
+    '6': False, \
+    '7': False, \
+    '8': False, \
+    '9': False, \
+    '0': False, \
     'A': True, \
     'B': True, \
     'C': False, \
@@ -73,6 +84,17 @@ IMPORTED_KEYS = { \
     'X': True, \
     'Y': True, \
     'Z': True, \
+    ',': False, \
+    '.': False, \
+    "'": False, \
+    '?': False, \
+    '(': False, \
+    ')': False, \
+    ':': False, \
+    ';': False, \
+    '!': False, \
+    '/': False, \
+    ' ': True, \
     }
 
 #####################################################################
@@ -100,7 +122,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.drive_state = 'stop_motors'
 	self.current_speed = 0
 
-        # get the first instance of choices
+        # add an instance of Becker's class
         self.selector = ti.ChoicePath(ti.huffmanAlgorithm(ti.LETTER_FREQ))
 
 	self.keyboardDict = { \
@@ -185,6 +207,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         self.pushButtonLeft.setEnabled(False)
 	self.pushButtonRight.setEnabled(False)
 	self.pushButtonReverse.setEnabled(False)
+
 	
         ## Control Panel ##
 
@@ -338,13 +361,14 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                      QtCore.SIGNAL("clicked()"), \
                      self.clearMessageDestination)
 	
-	'''	
+		
 	# Global Buttons
 	action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("Tab"))
-	self.connect(action, QtCore.SIGNAL("triggered()"), self.rotateControlButtons)
+	self.connect(action, QtCore.SIGNAL("triggered()"), self.rotateTabs)
 	self.addAction(action)
-        '''
+
+        
         # Wheelchair Buttons
 	action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("w"))
@@ -683,45 +707,41 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     def  updateWheelchairSpeed(self, new_speed=None):
 
         if new_speed == None:
-
-            ''' Will need to pull data from sensors and motors and do speed stuff here
-            '''
-            concentration = self.progressBarWheelchairConcentration.value()
-            relaxation = self.progressBarWheelchairRelaxation.value()
             
-            new_speed = self.calculateSpeed(concentration, relaxation)
+            new_speed = self.calculateSpeed()
 
         # Update GUI
-        if self.pushButtonWheelchairSpeedEnable.isChecked():
-            self.progressBarWheelchairSpeed.setValue(new_speed)
+        self.dialSpeed.setValue(new_speed)
 
         self.current_speed = new_speed
 
     #####################################################################
 
-    def  calculateSpeed(self, concentration, relaxation):
+    def  calculateSpeed(self):
 
-        speed = 0
-        # check if we need calculations first
-        ''' 
-        thresholds = define thresholds first
 
-        match = int(concentration)
-
-	while ((match not in thresholds['concentration'].keys()) and (match >= 0)):
-            match -= 1
-
-	if match in thresholds['concentration'].keys():
-            speed = thresholds['concentration'][match]
-		
-        match = int(relaxation)
-
-        while ((match not in thresholds['relaxation'].keys()) and (match >= 0)):
-            match -= 1
-		
-	if match in thresholds['relaxation'].keys():
         '''
+        Will need to pull data from sensors and motors and do speed stuff here?
+        '''
+        
+        speed = 0
+        
 	return(speed)
+
+    #####################################################################
+
+    def  rotateTabs(self):
+
+        count = self.tabWidget.count()
+
+        index = self.tabWidget.currentIndex()
+
+        if (index == count-1):
+            index = 0
+        else:
+            index = index + 1
+
+        self.tabWidget.setCurrentIndex(index)
 
     #####################################################################
 
@@ -814,30 +834,53 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  selectLeftKeys(self):
 
-        global TYPING
+        global TYPING, CHOICE, TX_KEYS, IMPORTED_KEYS
 
         if TYPING == True:
 
             # select the blue keys
-            self.chooseKeys(self.keyboardD, False)
-            
-            self.repaintKeys(self.keyboardDict.values(), BLANK)
-            self.keyboardSelectRight.setText("Next")
-            self.groupBox_keyboard.setStyleSheet(BLUE)
-            TYPING = False
-            return
+            self.chooseKeys(BLUE_KEYS)
+
+            if CHOICE:
+                # refresh dicts
+                TX_KEYS = {}
+                IMPORTED_KEYS = {}
+                
+                self.repaintKeys(self.keyboardDict.values(), BLANK)
+                self.keyboardSelectRight.setText("Next")
+                self.groupBox_keyboard.setStyleSheet(BLUE)
+                
+                TYPING = False
+                
+                return
+
+            else:
+                self.repaintKeys(RED_KEYS, BLANK)
+                # send TX_KEYS
+                # fill IMPORTED_KEYS
+                self.mapKeys(IMPORTED_KEYS)
 
         if TYPING == False:
 
             # loop through and click the selected button
             if CLICKS == 1:
+                # begin keyboard operation
                 self.groupBox_keyboard.setStyleSheet(BLANK)
                 self.keyboardSelectRight.setText("Select")
-                TYPING = True
+                CHOICE = False
 
-                # DO BECKER'S FANCYPANTS KEY STUFF HERE
+                ## DO BECKER'S FANCYPANTS KEY STUFF HERE ##
+                # fill IMPORTED_KEYS
+                
+
+                # separate IMPORTED_KEYS into red and blue choices
+                self.mapKeys(IMPORTED_KEYS)
+
+                # paint keys the appropriate color
                 self.repaintKeys(RED_KEYS, RED)
                 self.repaintKeys(BLUE_KEYS, BLUE)
+
+                TYPING = True
                 
             elif CLICKS == 2:
                 # send Backspace a click
@@ -854,37 +897,58 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  selectRightKeys(self):
 
-        global CLICKS, TYPING
+        global CLICKS, TYPING, TX_KEYS, IMPORTED_KEYS
 
         if TYPING == False:
 
             # loop through and change the style sheet based on what's selected
             if CLICKS == 1:
+                # Highlight Backspace
                 self.groupBox_keyboard.setStyleSheet(BLANK)
                 self.keyboardBackspace.setStyleSheet(BLUE)
+                
             elif CLICKS == 2:
+                # Highlight Clear
                 self.keyboardBackspace.setStyleSheet(BLANK)
                 self.messageClearButton.setStyleSheet(BLUE)
+                
             elif CLICKS == 3:
+                # Highlight Send
                 self.messageClearButton.setStyleSheet(BLANK)
                 self.messageSendButton.setStyleSheet(BLUE)
+                
             elif CLICKS == 4:
+                # Highlight Keyboard
                 self.messageSendButton.setStyleSheet(BLANK)
                 self.groupBox_keyboard.setStyleSheet(BLUE)
+                
                 CLICKS = 0
             
             CLICKS = CLICKS +1
             
-        elif TYPING == True:
+        if TYPING == True:
 
             # select the red keys
-            self.chooseKeys(self.keyboardA, True)
+            self.chooseKeys(RED_KEYS)
+
+            if CHOICE:
+                # refresh dicts
+                TX_KEYS = {}
+                IMPORTED_KEYS = {}
+                
+                self.repaintKeys(self.keyboardDict.values(), BLANK)
+                self.keyboardSelectRight.setText("Next")
+                self.groupBox_keyboard.setStyleSheet(BLUE)
+                
+                TYPING = False
+                
+                return
             
-            self.repaintKeys(self.keyboardDict.values(), BLANK)
-            self.keyboardSelectRight.setText("Next")
-            self.groupBox_keyboard.setStyleSheet(BLUE)
-            TYPING = False
-            return
+            else:
+                self.repaintKeys(BLUE_KEYS, BLANK)
+                # send TX_KEYS
+                # fill IMPORTED_KEYS
+                self.mapKeys(IMPORTED_KEYS)
 
     #####################################################################
 
@@ -893,36 +957,37 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         # paints the given keys the selected color
         for i in keys:
             i.setStyleSheet(color)
-
-        '''
-        if style == 'clear':
-            for i in self.keyboardDict.values():
-                i.setStyleSheet(BLANK)
-        elif style == 'color':
-            for i in self.keyboardDict.values():
-                #if :
-                    i.setStyleSheet(RED)
-                #if :
-                    i.setStyleSheet(BLUE)
-        '''
         
     #####################################################################
 
-    def  chooseKeys(self, keys, choice):
+    def  chooseKeys(self, keys):
 
-        if choice:
+        global CHOICE, TX_KEYS, IMPORTED_KEYS
+
+        if len(keys) == 1:
+            CHOICE = True
+
+            # send click
             keys.click()
-
+            
         else:
-            keys.click()
+            # set IMPORTED_KEYS to the selected keys
+            TX_KEYS = keys
+            IMPORTED_KEYS = {}
 
     #####################################################################
 
-    def mapKeys(self):
+    def mapKeys(self, keys):
 
-        global IMPORTED_KEYS, BLUE_KEYS, RED_KEYS
+        global BLUE_KEYS, RED_KEYS
 
-        temp = 
+        # map the buttons to True or False
+        temp = {self.keyboardDict[i]:keys[i] for i in keys \
+                if i in self.keyboardDict}
+
+        # separate True and False
+        RED_KEYS = {i for i in temp if temp[i] == True}
+        BLUE_KEYS = {i for i in temp if temp[i] == False}
 
     #####################################################################
 
@@ -941,25 +1006,11 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                                            QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
-            '''
-            if self.brainstormsClient != None:
-                
-                self.stopMotors()
-                self.brainstormsClient.socket.flush()
-                
-                if self.brainstormsServer != None:
-                    if self.brainstormsServer.rc == None:
-                        
-                        device_address = str(self.comboBoxRobotPortSelect.currentText())
-                        elf.brainstormsServer.executeCommand('stop_motors')
-                        
-                    else:
-                        self.brainstormsServer.rc.run('stop_motors')
-            '''
-                        
+            # Quit
             event.accept()
 
         else:
+            # Cancel
             event.ignore()
 
 
@@ -969,7 +1020,6 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
 if __name__ == '__main__':
 	
-	#log = puzzlebox_logger.puzzlebox_logger(logfile='client_interface')
 	log = None
 	
 	app = QtGui.QApplication(sys.argv)

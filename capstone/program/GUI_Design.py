@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'demoGUI.ui'
 #
-# Created: Tue Apr 01 12:29:55 2014
+# Created: Wed Apr 02 20:13:38 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -42,6 +42,7 @@ class Ui_Form(object):
         self.groupBox_Speed.setObjectName(_fromUtf8("groupBox_Speed"))
         self.dialSpeed = QtGui.QDial(self.groupBox_Speed)
         self.dialSpeed.setGeometry(QtCore.QRect(30, 60, 241, 201))
+        self.dialSpeed.setSingleStep(5)
         self.dialSpeed.setInvertedAppearance(False)
         self.dialSpeed.setInvertedControls(False)
         self.dialSpeed.setNotchesVisible(True)
@@ -549,9 +550,9 @@ class Ui_Form(object):
         self.tab_3 = QtGui.QWidget()
         self.tab_3.setObjectName(_fromUtf8("tab_3"))
         self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
-        self.tabControPanel = QtGui.QWidget()
-        self.tabControPanel.setObjectName(_fromUtf8("tabControPanel"))
-        self.groupBox_EEGsetup = QtGui.QGroupBox(self.tabControPanel)
+        self.tabControlPanel = QtGui.QWidget()
+        self.tabControlPanel.setObjectName(_fromUtf8("tabControlPanel"))
+        self.groupBox_EEGsetup = QtGui.QGroupBox(self.tabControlPanel)
         self.groupBox_EEGsetup.setGeometry(QtCore.QRect(30, 30, 211, 241))
         self.groupBox_EEGsetup.setObjectName(_fromUtf8("groupBox_EEGsetup"))
         self.comboBox_EEG = QtGui.QComboBox(self.groupBox_EEGsetup)
@@ -582,7 +583,7 @@ class Ui_Form(object):
         self.lineEdit_Port.setAlignment(QtCore.Qt.AlignCenter)
         self.lineEdit_Port.setDragEnabled(True)
         self.lineEdit_Port.setObjectName(_fromUtf8("lineEdit_Port"))
-        self.groupBox_Device = QtGui.QGroupBox(self.tabControPanel)
+        self.groupBox_Device = QtGui.QGroupBox(self.tabControlPanel)
         self.groupBox_Device.setGeometry(QtCore.QRect(270, 40, 221, 121))
         self.groupBox_Device.setObjectName(_fromUtf8("groupBox_Device"))
         self.comboBoxDeviceSelect = QtGui.QComboBox(self.groupBox_Device)
@@ -596,7 +597,7 @@ class Ui_Form(object):
         self.pushButtonDeviceConnect = QtGui.QPushButton(self.groupBox_Device)
         self.pushButtonDeviceConnect.setGeometry(QtCore.QRect(100, 80, 101, 28))
         self.pushButtonDeviceConnect.setObjectName(_fromUtf8("pushButtonDeviceConnect"))
-        self.groupBox_MsgDest = QtGui.QGroupBox(self.tabControPanel)
+        self.groupBox_MsgDest = QtGui.QGroupBox(self.tabControlPanel)
         self.groupBox_MsgDest.setGeometry(QtCore.QRect(540, 50, 241, 211))
         self.groupBox_MsgDest.setObjectName(_fromUtf8("groupBox_MsgDest"))
         self.selectDestType = QtGui.QComboBox(self.groupBox_MsgDest)
@@ -624,7 +625,7 @@ class Ui_Form(object):
         self.selectPhoneCarrier.addItem(_fromUtf8(""))
         self.selectPhoneCarrier.addItem(_fromUtf8(""))
         self.selectPhoneCarrier.addItem(_fromUtf8(""))
-        self.tabWidget.addTab(self.tabControPanel, _fromUtf8(""))
+        self.tabWidget.addTab(self.tabControlPanel, _fromUtf8(""))
 
         self.retranslateUi(Form)
         self.tabWidget.setCurrentIndex(3)
@@ -714,5 +715,5 @@ class Ui_Form(object):
         self.selectPhoneCarrier.setItemText(1, _translate("Form", "Sprint", None))
         self.selectPhoneCarrier.setItemText(2, _translate("Form", "T-Mobile", None))
         self.selectPhoneCarrier.setItemText(3, _translate("Form", "Verizon", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabControPanel), _translate("Form", "Control Panel", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabControlPanel), _translate("Form", "Control Panel", None))
 
