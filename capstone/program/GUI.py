@@ -27,7 +27,8 @@ import MessageSender as ms
 import TextInserter as ti
 import CharacterFreqLogger as cfl
 
-#cfl.directory = "C:\\Users\\Tim\\Documents\\GitHub\\Capstone\\capstone\\program"
+# MAKE SURE TO CHANGE THIS FOR EACH COMPUTER
+cfl.directory = 'C:\\Users\\Tim\\Documents\\GitHub\\Capstone\\capstone\\program\\'
 
 #####################################################################
 # GLOBALS

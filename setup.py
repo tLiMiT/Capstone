@@ -56,9 +56,10 @@ if (sys.platform == 'win32'):
                       "images/reverse.svg", \
                       "images/left.svg", \
                       "images/right.svg", \
-                      "images/stop.svg", \
-                      "images/CharFreqBinary_f_base.bin"
+                      "images/stop.svg",
                       ]),
+                    ("capstone/program", \
+                     ["capstone/program/CharFreqBinary_f_base.bin"]),
                     ]
     
 else:
