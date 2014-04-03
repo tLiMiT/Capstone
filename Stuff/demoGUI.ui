@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1125</width>
-    <height>655</height>
+    <width>1112</width>
+    <height>789</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1121</width>
-     <height>651</height>
+     <width>1111</width>
+     <height>791</height>
     </rect>
    </property>
    <property name="layoutDirection">
@@ -42,8 +42,8 @@
     <widget class="QGroupBox" name="groupBox_Speed">
      <property name="geometry">
       <rect>
-       <x>710</x>
-       <y>170</y>
+       <x>690</x>
+       <y>230</y>
        <width>301</width>
        <height>301</height>
       </rect>
@@ -125,8 +125,8 @@
     <widget class="QGroupBox" name="groupBox_Drive">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>90</y>
+       <x>120</x>
+       <y>150</y>
        <width>381</width>
        <height>441</height>
       </rect>
@@ -281,9 +281,6 @@
        <width>1021</width>
        <height>451</height>
       </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(112, 174, 255);</string>
      </property>
      <property name="title">
       <string>Keyboard</string>
@@ -1249,52 +1246,6 @@
        <string>,</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="keyboardSelectLeft">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>360</y>
-        <width>151</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(112, 174, 255);</string>
-      </property>
-      <property name="text">
-       <string>Select</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="keyboardSelectRight">
-      <property name="geometry">
-       <rect>
-        <x>670</x>
-        <y>360</y>
-        <width>151</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 115, 80);</string>
-      </property>
-      <property name="text">
-       <string>Next</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="messageClearButton">
       <property name="geometry">
        <rect>
@@ -1366,6 +1317,73 @@
       </property>
       <property name="text">
        <string>Send</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_Controls">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>630</y>
+       <width>1021</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="title">
+      <string>Controls</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <widget class="QPushButton" name="keyboardSelectLeft">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>30</y>
+        <width>321</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(112, 174, 255);</string>
+      </property>
+      <property name="text">
+       <string>Select</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="keyboardSelectRight">
+      <property name="geometry">
+       <rect>
+        <x>670</x>
+        <y>30</y>
+        <width>321</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 115, 80);</string>
+      </property>
+      <property name="text">
+       <string>Next</string>
       </property>
      </widget>
     </widget>

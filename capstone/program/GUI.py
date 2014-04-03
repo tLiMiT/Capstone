@@ -134,6 +134,8 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             ' ': self.keyboardSpace, \
         }
 
+	self.repaintKeys(self.keyboardDict.values(), BLUE)
+
     #####################################################################
 
     def configureSettings(self):
@@ -814,9 +816,8 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                 IMPORTED_KEYS = {}
                 
                 # prepare for a new round
-                self.repaintKeys(self.keyboardDict.values(), BLANK)
                 self.keyboardSelectRight.setText("Next")
-                self.groupBox_keyboard.setStyleSheet(BLUE)
+                self.repaintKeys(self.keyboardDict.values(), BLUE)
                 
                 TYPING = False
                 
@@ -876,7 +877,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             # loop through and change the style sheet based on what's selected
             if CLICKS == 1:
                 # Highlight Backspace
-                self.groupBox_keyboard.setStyleSheet(BLANK)
+                self.repaintKeys(self.keyboardDict.values(), BLANK)
                 self.keyboardBackspace.setStyleSheet(BLUE)
                 
             elif CLICKS == 2:
@@ -892,7 +893,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             elif CLICKS == 4:
                 # Highlight Keyboard
                 self.messageSendButton.setStyleSheet(BLANK)
-                self.groupBox_keyboard.setStyleSheet(BLUE)
+                self.repaintKeys(self.keyboardDict.values(), BLUE)
                 
                 CLICKS = 0
             
@@ -918,9 +919,8 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                 IMPORTED_KEYS = {}
 
                 # prepare for a new round
-                self.repaintKeys(self.keyboardDict.values(), BLANK)
                 self.keyboardSelectRight.setText("Next")
-                self.groupBox_keyboard.setStyleSheet(BLUE)
+                self.repaintKeys(self.keyboardDict.values(), BLUE)
                 
                 TYPING = False
                 
