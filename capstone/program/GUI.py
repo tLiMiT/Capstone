@@ -25,6 +25,7 @@ import Wheelchair_Control as wheelchair_control
 
 import MessageSender as ms
 import TextInserter as ti
+import CharacterFreqLogger as cfl
 
 #####################################################################
 # GLOBALS
@@ -121,9 +122,10 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 		
 	self.drive_state = 'stop_motors'
 	self.current_speed = 0
-
-        # add an instance of Becker's class
-        self.selector = ti.ChoicePath(ti.huffmanAlgorithm(ti.LETTER_FREQ))
+	
+        # add Becker's stuff
+        temp = cfl.getCondFreq('', cfl.READWRITE_BINARY)
+        self.selector = ti.ChoicePath(ti.huffmanAlgorithm(temp))
 
 	self.keyboardDict = { \
             '1': self.keyboardNum1, \
