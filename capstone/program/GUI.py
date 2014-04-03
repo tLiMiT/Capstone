@@ -845,12 +845,18 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
         if TYPING == True:
 
-            # select the blue key(s)
-            self.chooseKeys(BLUE_KEYS)
+            # red keys are eliminated, set to clear
+            self.repaintKeys(RED_KEYS, BLANK)
+            
+            # split the blue keys
+            self.selector.select(False)
 
-            if CHOICE:
+            if self.selector.getChoiceCount() == 1:
                 # send click
-                #BLUE_KEYS.click()
+                BLUE_KEYS.pop().click()
+
+                # refresh Becker's class
+                self.selector.reset()
                 
                 # refresh dict
                 IMPORTED_KEYS = {}
@@ -865,12 +871,6 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                 return
 
             else:
-                # red keys are eliminated, set clear
-                self.repaintKeys(RED_KEYS, BLANK)
-                
-                # split the blue keys
-                self.selector.select(False)
-                
                 # fill IMPORTED_KEYS
                 IMPORTED_KEYS = self.selector.splitChoices()
 
@@ -948,12 +948,19 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             
         if TYPING == True:
 
-            # select the red key(s)
-            self.chooseKeys(RED_KEYS)
+            # blue keys are eliminated, set to clear
+            self.repaintKeys(BLUE_KEYS, BLANK)
+            
+            # split the red keys
+            self.selector.select(True)
 
-            if CHOICE:
+            # Check if single button is left
+            if self.selector.getChoiceCount() == 1:
                 # send click
-                #RED_KEYS.click()
+                RED_KEYS.pop().click()
+
+                # refresh Becker's class
+                self.selector.reset()
                 
                 # refresh dict
                 IMPORTED_KEYS = {}
@@ -968,12 +975,6 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                 return
             
             else:
-                # blue keys are eliminated, set clear
-                self.repaintKeys(BLUE_KEYS, BLANK)
-                
-                # split the red keys
-                self.selector.select(True)
-                
                 # fill IMPORTED_KEYS
                 IMPORTED_KEYS = self.selector.splitChoices()
 
@@ -997,12 +998,12 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     def  chooseKeys(self, keys):
 
         global CHOICE
-
-        if self.selector.getChoiceCount() == 1:
+        
+        if len(keys) == 1:
             CHOICE = True
-
+            
             # send click
-            #keys.click()
+            keys.click()
 
     #####################################################################
 
@@ -1048,12 +1049,12 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 #####################################################################
 
 if __name__ == '__main__':
+
+    log = None
 	
-	log = None
+    app = QtGui.QApplication(sys.argv)
 	
-	app = QtGui.QApplication(sys.argv)
+    window = capstone_program_client_interface(log, DEBUG)
+    window.show()
 	
-	window = capstone_program_client_interface(log, DEBUG)
-	window.show()
-	
-	sys.exit(app.exec_())
+    sys.exit(app.exec_())
