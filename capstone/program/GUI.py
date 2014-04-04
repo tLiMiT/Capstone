@@ -11,16 +11,16 @@ if (sys.platform == 'win32'):
     import re
     import serial
 else:
-    # We're fucked because I don't use Unix/Linux
+    # We're fucked, because we're not using Unix/Linux
     DEFAULT_IMAGE_PATH = 'images'
 
-import Configuration as configuration
+#import Configuration as configuration
 
-from PyQt4 import QtCore, QtGui, QtNetwork
+from PyQt4 import QtCore, QtGui
 
 from GUI_Design import Ui_Form as Design
 
-import Client as program_client
+#import Client as program_client
 import Wheelchair_Control as wheelchair_control
 
 import MessageSender as ms
@@ -66,24 +66,27 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         QtGui.QWidget.__init__(self, parent)
         self.setupUi(self)
 
+        # map the buttons and callbacks
         self.configureSettings()
         self.connectWidgets()
 
         self.name = "Capstone Interface"
 		
-	#self.capstoneServer = server
-	self.capstoneClient = None
-	
+	# probably not needed
+	#self.capstoneClient = None
+
+	# set wheelchair
 	self.wheelchair = None
-		
+
+	# set drive state	
 	self.drive_state = 'stop_motors'
 	self.current_speed = 0
 	
         # add Becker's stuff
-        
         temp = cfl.getCondFreq('', cfl.READWRITE_BINARY)
         self.selector = ti.ChoicePath(ti.huffmanAlgorithm(temp))
 
+        # create a dictionary relating keyboard buttons to their respective characters
 	self.keyboardDict = { \
             '1': self.keyboardNum1, \
             '2': self.keyboardNum2, \
@@ -134,6 +137,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             ' ': self.keyboardSpace, \
         }
 
+        # initialize the keyboard keys as blue
 	self.repaintKeys(self.keyboardDict.values(), BLUE)
 
     #####################################################################
@@ -168,6 +172,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         self.pushButtonLeft.setEnabled(False)
 	self.pushButtonRight.setEnabled(False)
 	self.pushButtonReverse.setEnabled(False)
+	self.pushButtonStop.setEnabled(False)
 
 	
         ## Control Panel ##
@@ -273,20 +278,16 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def connectWidgets(self):
 
-        # Wheelchair Buttons
+        ## Global Buttons ##
+
+        # set Tab key callback and action
+	action = QtGui.QAction(self)
+	action.setShortcut(QtGui.QKeySequence("Tab"))
+	self.connect(action, QtCore.SIGNAL("triggered()"), self.rotateTabs)
+	self.addAction(action)
 	
-		
-	'''	
-	self.connect(self.pushButtonWheelchairConcentrationEnable, \
-                     QtCore.SIGNAL("clicked()"), \
-                     self.updateWheelchairConcentrationButton)	
-	self.connect(self.pushButtonWheelchairRelaxationEnable, \
-                     QtCore.SIGNAL("clicked()"), \
-                     self.updateWheelchairRelaxationButton)	
-	self.connect(self.pushButtonWheelchairSpeedEnable, \
-                     QtCore.SIGNAL("clicked()"), \
-                     self.updateWheelchairSpeedButton)
-	'''
+
+        ## Wheelchair Buttons ##
 	
 	# Set drive control callbacks	
 	self.connect(self.pushButtonForward, \
@@ -304,33 +305,8 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.connect(self.pushButtonStop, \
                      QtCore.SIGNAL("pressed()"), \
                      self.stopWheelchair)
-		
-		
-		
-	# Control Panel Buttons
-	self.connect(self.pushButtonDeviceSearch, \
-                     QtCore.SIGNAL("clicked()"), \
-                     self.searchForDevices)
-	self.connect(self.pushButtonDeviceConnect, \
-                     QtCore.SIGNAL("clicked()"), \
-                     self.connectToWheelchair)
 
-        self.connect(self.setMsgDest, \
-                     QtCore.SIGNAL("clicked()"), \
-                     self.setMessageDestination)
-	self.connect(self.clearMsgDest, \
-                     QtCore.SIGNAL("clicked()"), \
-                     self.clearMessageDestination)
-	
-		
-	# Global Buttons
-	action = QtGui.QAction(self)
-	action.setShortcut(QtGui.QKeySequence("Tab"))
-	self.connect(action, QtCore.SIGNAL("triggered()"), self.rotateTabs)
-	self.addAction(action)
-
-        
-        # Wheelchair Buttons
+	# set wheelchair button actions
 	action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("w"))
 	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonForward, \
@@ -359,12 +335,32 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	action.setShortcut(QtGui.QKeySequence("Space"))
 	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonStop, \
                      QtCore.SLOT("animateClick()"))
-	self.addAction(action)
+	self.addAction(action)	
+		
+		
+	## Control Panel Buttons ##
+
+	# set device callbacks
+	self.connect(self.pushButtonDeviceSearch, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.searchForDevices)
+	self.connect(self.pushButtonDeviceConnect, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.connectToWheelchair)
+
+        # set message callbacks
+        self.connect(self.setMsgDest, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.setMessageDestination)
+	self.connect(self.clearMsgDest, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.clearMessageDestination)
 
 
 	## Message Buttons ##
 	
-	# Keyboard Buttons
+	# set keyboard button callbacks
+	# numbers
 	self.connect(self.keyboardNum1, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('1'))
@@ -395,7 +391,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.connect(self.keyboardNum0, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('0'))
-	
+	# letters
 	self.connect(self.keyboardQ, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('Q'))
@@ -474,7 +470,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.connect(self.keyboardM, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('M'))
-	
+	# special characters
 	self.connect(self.keyboardPeriod, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('.'))
@@ -505,18 +501,20 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.connect(self.keyboardSlash, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('/'))
+	# backspace
 	self.connect(self.keyboardBackspace, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('Backspace'))
+	# space
 	self.connect(self.keyboardSpace, \
                      QtCore.SIGNAL("clicked()"), \
                      lambda: self.addCharToMessage('Space'))
-
+        # clear message
 	self.connect(self.messageClearButton, \
                      QtCore.SIGNAL("clicked()"), \
                      self.clearMessage)
         
-        # set key select callbacks
+        # set select key callbacks
 	self.connect(self.keyboardSelectLeft, \
                      QtCore.SIGNAL("clicked()"), \
                      self.selectLeftKeys)
@@ -524,7 +522,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                      QtCore.SIGNAL("clicked()"), \
                      self.selectRightKeys)
         
-        # set key select actions          
+        # set select key actions          
         action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("q"))
 	self.connect(action, QtCore.SIGNAL("activated()"), self.keyboardSelectLeft, \
@@ -537,12 +535,13 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
 
-
 	# send message button
 	self.connect(self.messageSendButton, \
                      QtCore.SIGNAL("clicked()"), \
                      self.sendUserMessage)
-	
+
+
+	## Reserved ##
 	
 		
     #####################################################################
@@ -616,7 +615,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 		for device in device_list:
                     if device.startswith('tty.NXT-DevB'):
                         serial_ports.append( DEVICE_PATH + '/' + device )
-                        
+            
 	return(serial_ports)
 
     #####################################################################
@@ -693,15 +692,22 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  rotateTabs(self):
 
+        # get the total number of tabs
+        # NOTE: count returns N (0 to N-1 tabs)
         count = self.tabWidget.count()
 
+        # get the tab we are currently on
         index = self.tabWidget.currentIndex()
 
+        # if index is equal to the count...
         if (index == count-1):
+            # reset the index
             index = 0
         else:
+            # increment the index
             index = index + 1
 
+        # set the new tab as the current tab
         self.tabWidget.setCurrentIndex(index)
 
     #####################################################################

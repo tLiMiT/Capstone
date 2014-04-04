@@ -29,9 +29,9 @@ LOG_LEVEL_ERROR = 0
 LOG_LEVEL_DISABLE = -1
 
 DEFAULT_LOG_LEVEL = LOG_LEVEL_DEBUG
-DEFAULT_LOGFILE = 'brainstorms'
+DEFAULT_LOGFILE = 'capstone'
 
-LOGFILE_DIR = '/var/log/puzzlebox'
+LOGFILE_DIR = '/capstone/program'
 LOGFILE_SUFFIX = '.log'
 LOGFILE_SUFFIX_DEBUG = '_debug.log'
 LOGFILE_SUFFIX_INFO = '_info.log'
