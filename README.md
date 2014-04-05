@@ -1,8 +1,10 @@
-Northeastern University - EECE Capstone Design - Team C6
+Northeastern University
+EECE Capstone Design - Team C6
 ========================================================
 
 The goal of this Capstone project is to allow a person with physical impairments to control an electric wheelchair
 and send text or email messages to a caregiver using an Emotiv EPOC EEG headset.
+
 
 --------------------------------------------------------
 To install the program:
