@@ -32,6 +32,7 @@ import CharacterFreqLogger as cfl
 cfl.directory = 'C:\\Users\\Tim\\Documents\\GitHub\\Capstone\\capstone\\program\\'
 #cfl.directory = 'C:\\Users\\C6\\Desktop\\bin\\'
 
+
 #####################################################################
 # GLOBALS
 #####################################################################
@@ -147,7 +148,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         ## Capstone Interface ##
 
         # Load the window icon
-        image_path = "puzzlebox.ico"
+        image_path = "images/puzzlebox.ico"
 	if not os.path.exists(image_path):
             image_path = os.path.join(DEFAULT_IMAGE_PATH, image_path)
 		
@@ -157,9 +158,6 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                            QtGui.QIcon.Normal, \
                            QtGui.QIcon.Off)
             self.setWindowIcon(icon)
-
-	# Search for available Serial devices
-	self.searchForDevices()
 
 
         ## Wheelchair ##
@@ -177,7 +175,8 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	
         ## Control Panel ##
 
-	# add control panel stuff here if needed
+	# Search for available Serial devices
+	self.searchForDevices()
 
 	
     #####################################################################
@@ -195,14 +194,14 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 			self.searchForDevices()
 			self.pushButtonDeviceConnect.setChecked(False)
 			return
-
+        '''
 	# initalize wheelchair control	
 	self.wheelchair = \
                         wheelchair_control.capstone_program_wheelchair_control( \
                             device_address=device, \
                             command=None, \
                             DEBUG=self.DEBUG)
-
+        '''
         # set callbacks
 	self.disconnect(self.pushButtonDeviceConnect, \
                         QtCore.SIGNAL("clicked()"), \
@@ -215,9 +214,9 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.pushButtonDeviceConnect.setText('Disconnect')
 
 	# disable the wheelchair connection options	
-	self.comboBoxWheelchairTransmitter.setEnabled(False)
+	self.comboBoxDeviceSelect.setEnabled(False)
 	self.comboBoxPortSelect.setEnabled(False)
-	self.pushButtonWheelchairSearch.setEnabled(False)
+	self.pushButtonDeviceSearch.setEnabled(False)
 
 	# enable the drive controls
 	self.pushButtonForward.setEnabled(True)
@@ -226,6 +225,9 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.pushButtonRight.setEnabled(True)
 	self.pushButtonStop.setEnabled(True)
 	self.dialSpeed.setEnabled(True)
+
+	# update status label
+	self.labelWheelchairStatus.setText("Status: Connected")
 
 	''' implement later	
 	# Safety Measure: Explicitely require wheelchair speed control
@@ -254,9 +256,9 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.pushButtonDeviceConnect.setText('Connect')
 
         # enable the wheelchair connection options
-	self.comboBoxWheelchairTransmitter.setEnabled(True)
-	self.comboBoxWheelchairPortSelect.setEnabled(True)
-	self.pushButtonWheelchairSearch.setEnabled(True)
+	self.comboBoxDeviceSelect.setEnabled(True)
+	self.comboBoxPortSelect.setEnabled(True)
+	self.pushButtonDeviceSearch.setEnabled(True)
 
 	# disable the drive controls
 	self.pushButtonForward.setEnabled(False)
@@ -265,6 +267,9 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.pushButtonRight.setEnabled(False)
 	self.pushButtonStop.setEnabled(False)
 	self.dialSpeed.setEnabled(False)
+
+	# update status label
+	self.labelWheelchairStatus.setText("Status: Disconnected")
 
         ''' implement later
         # Safety Measure: Explicitely require wheelchair speed control
@@ -638,33 +643,49 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     
     def driveWheelchairForward(self):
         #print "WheelchairForward"
-        speed = self.dialSpeed.value()
-        self.wheelchair.sendCommand(speed, 'forward')
+        self.sendCommand('w')
 	
     def driveWheelchairReverse(self):
         #print "WheelchairReverse"
-        speed = self.dialSpeed.value()
-        self.wheelchair.sendCommand(speed, 'reverse')
+        self.sendCommand('s')
 	
     def driveWheelchairLeft(self):
         #print "WheelchairLeft"
-        speed = self.dialSpeed.value()
-        self.wheelchair.sendCommand(speed, 'left')
+        self.sendCommand('a')
 	
     def driveWheelchairRight(self):
         #print "WheelchairRight"
-        speed = self.dialSpeed.value()
-        self.wheelchair.sendCommand(speed, 'right')
+        self.sendCommand('d')
 	
     def stopWheelchair(self):
         #print "stopWheelchair"
-        speed = self.dialSpeed.value()
-        self.wheelchair.sendCommand(speed, 'stop')
-    
+        self.sendCommand(' ')
 
     #####################################################################
 
-    def  updateWheelchairSpeed(self, new_speed=None):
+    def sendCommand(self, command):
+
+        # get the port name
+        port = str(self.comboBoxPortSelect.currentText())
+
+        # open the port
+        ser = serial.Serial(port)
+
+        # write command
+        ser.write(command)
+
+        # read up to ten bytes (timeout)
+        s = ser.read(10)
+
+        # read a '\n' terminated line
+        line = ser.readline()
+
+        # close port
+        ser.close()
+
+    #####################################################################
+
+    def updateWheelchairSpeed(self, new_speed=None):
 
         if new_speed == None:
             
@@ -677,7 +698,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     #####################################################################
 
-    def  calculateSpeed(self):
+    def calculateSpeed(self):
 
 
         '''
@@ -690,7 +711,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     #####################################################################
 
-    def  rotateTabs(self):
+    def rotateTabs(self):
 
         # get the total number of tabs
         # NOTE: count returns N (0 to N-1 tabs)
@@ -712,7 +733,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     #####################################################################
 
-    def  setMessageDestination(self):
+    def setMessageDestination(self):
         
         global MESSAGE_DESTINATION
         
@@ -744,7 +765,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     #####################################################################
 
-    def  clearMessageDestination(self):
+    def clearMessageDestination(self):
 
         global MESSAGE_DESTINATION
 
@@ -756,7 +777,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     
     #####################################################################
 
-    def  sendUserMessage(self):
+    def sendUserMessage(self):
 
         global USER_MESSAGE
 
@@ -794,7 +815,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     #####################################################################
 
-    def  clearMessage(self):
+    def clearMessage(self):
         
         global USER_MESSAGE
 
@@ -806,7 +827,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     #####################################################################
 
-    def  selectLeftKeys(self):
+    def selectLeftKeys(self):
 
         global TYPING, IMPORTED_KEYS
 
@@ -881,7 +902,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     #####################################################################
 
-    def  selectRightKeys(self):
+    def selectRightKeys(self):
 
         global CLICKS, TYPING, IMPORTED_KEYS
 
@@ -952,7 +973,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     #####################################################################
 
-    def  repaintKeys(self, keys, color):
+    def repaintKeys(self, keys, color):
 
         # paints the given keys the selected color
         for i in keys:
@@ -978,7 +999,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     
     #####################################################################
 
-    def  closeEvent(self, event):
+    def closeEvent(self, event):
         
         quit_message = "Are you sure you want to exit the program?"
         

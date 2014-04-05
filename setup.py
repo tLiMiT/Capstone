@@ -51,12 +51,12 @@ if (sys.platform == 'win32'):
         data_files=[(".", \
                      ["C:\Users\Tim\Documents\GitHub\Capstone/capstone_program_configuration.ini"]),
                     ("images", \
-                     ["C:\Users\Tim\Documents\GitHub\Capstone/images/puzzlebox.ico", \
-                      "C:\Users\Tim\Documents\GitHub\Capstone/images/forward.svg", \
-                      "C:\Users\Tim\Documents\GitHub\Capstone/images/reverse.svg", \
-                      "C:\Users\Tim\Documents\GitHub\Capstone/images/left.svg", \
-                      "C:\Users\Tim\Documents\GitHub\Capstone/images/right.svg", \
-                      "C:\Users\Tim\Documents\GitHub\Capstone/images/stop.svg",
+                     ["C:\Users\Tim\Documents\GitHub\Capstone/Stuff/images/puzzlebox.ico", \
+                      "C:\Users\Tim\Documents\GitHub\Capstone/Stuff/images/forward.svg", \
+                      "C:\Users\Tim\Documents\GitHub\Capstone/Stuff/images/reverse.svg", \
+                      "C:\Users\Tim\Documents\GitHub\Capstone/Stuff/images/left.svg", \
+                      "C:\Users\Tim\Documents\GitHub\Capstone/Stuff/images/right.svg", \
+                      "C:\Users\Tim\Documents\GitHub\Capstone/Stuff/images/stop.svg",
                       ]),
                     ("capstone/program", \
                      ["C:\Users\Tim\Documents\GitHub\Capstone/capstone/program/CharFreqBinary_f_base.bin"]),

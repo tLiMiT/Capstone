@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'demoGUI.ui'
 #
-# Created: Fri Apr 04 11:54:45 2014
+# Created: Sat Apr 05 13:25:17 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -66,7 +66,7 @@ class Ui_Form(object):
         self.pushButtonStop.setGeometry(QtCore.QRect(140, 170, 101, 101))
         self.pushButtonStop.setText(_fromUtf8(""))
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(_fromUtf8("../images/stop.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(_fromUtf8("../images/Stop Sign.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonStop.setIcon(icon1)
         self.pushButtonStop.setIconSize(QtCore.QSize(70, 70))
         self.pushButtonStop.setObjectName(_fromUtf8("pushButtonStop"))
@@ -74,7 +74,7 @@ class Ui_Form(object):
         self.pushButtonRight.setGeometry(QtCore.QRect(260, 170, 101, 101))
         self.pushButtonRight.setText(_fromUtf8(""))
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(_fromUtf8("../images/right.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(_fromUtf8("../images/right.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonRight.setIcon(icon2)
         self.pushButtonRight.setIconSize(QtCore.QSize(70, 70))
         self.pushButtonRight.setObjectName(_fromUtf8("pushButtonRight"))
@@ -82,15 +82,16 @@ class Ui_Form(object):
         self.pushButtonReverse.setGeometry(QtCore.QRect(140, 290, 101, 101))
         self.pushButtonReverse.setText(_fromUtf8(""))
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(_fromUtf8("../images/reverse.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(_fromUtf8("../images/reverse.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonReverse.setIcon(icon3)
         self.pushButtonReverse.setIconSize(QtCore.QSize(70, 70))
         self.pushButtonReverse.setObjectName(_fromUtf8("pushButtonReverse"))
         self.pushButtonForward = QtGui.QPushButton(self.groupBox_Drive)
         self.pushButtonForward.setGeometry(QtCore.QRect(140, 50, 101, 101))
+        self.pushButtonForward.setAutoFillBackground(False)
         self.pushButtonForward.setText(_fromUtf8(""))
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(_fromUtf8("../images/forward.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(_fromUtf8("../images/forward.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonForward.setIcon(icon4)
         self.pushButtonForward.setIconSize(QtCore.QSize(70, 70))
         self.pushButtonForward.setObjectName(_fromUtf8("pushButtonForward"))
@@ -98,7 +99,7 @@ class Ui_Form(object):
         self.pushButtonLeft.setGeometry(QtCore.QRect(20, 170, 101, 101))
         self.pushButtonLeft.setText(_fromUtf8(""))
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(_fromUtf8("../images/left.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(_fromUtf8("../images/left.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButtonLeft.setIcon(icon5)
         self.pushButtonLeft.setIconSize(QtCore.QSize(70, 70))
         self.pushButtonLeft.setObjectName(_fromUtf8("pushButtonLeft"))

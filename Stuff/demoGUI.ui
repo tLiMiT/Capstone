@@ -148,7 +148,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>../images/stop.svg</normaloff>../images/stop.svg</iconset>
+        <normaloff>../images/Stop Sign.png</normaloff>../images/Stop Sign.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -171,7 +171,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>../images/right.svg</normaloff>../images/right.svg</iconset>
+        <normaloff>../images/right.png</normaloff>../images/right.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -194,7 +194,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>../images/reverse.svg</normaloff>../images/reverse.svg</iconset>
+        <normaloff>../images/reverse.png</normaloff>../images/reverse.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -212,12 +212,15 @@
         <height>101</height>
        </rect>
       </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string/>
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>../images/forward.svg</normaloff>../images/forward.svg</iconset>
+        <normaloff>../images/forward.png</normaloff>../images/forward.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -240,7 +243,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>../images/left.svg</normaloff>../images/left.svg</iconset>
+        <normaloff>../images/left.png</normaloff>../images/left.png</iconset>
       </property>
       <property name="iconSize">
        <size>
