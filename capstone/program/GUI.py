@@ -76,8 +76,8 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	# probably not needed
 	#self.capstoneClient = None
 
-	# set wheelchair
-	self.wheelchair = None
+	# set serial port
+	self.serialPort = None
 
 	# set drive state	
 	self.drive_state = 'stop_motors'
@@ -210,6 +210,16 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
                      QtCore.SIGNAL("clicked()"), \
                      self.disconnectFromWheelchair)
 
+	
+
+        # get the current port name
+        port = str(self.comboBoxPortSelect.currentText())
+
+        # open the serial port
+        baudRate = 9600
+        self.serialPort = serial.Serial(port, baudRate)
+
+
 	# Change connect button text for next state	
 	self.pushButtonDeviceConnect.setText('Disconnect')
 
@@ -243,6 +253,9 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
         # stop the wheelchair
         self.stopWheelchair()
+
+        # close serial port
+        self.serialPort.close()
 
         # set callbacks
         self.disconnect(self.pushButtonDeviceConnect, \
@@ -643,19 +656,19 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     
     def driveWheelchairForward(self):
         #print "WheelchairForward"
-        self.sendCommand('w')
+        self.sendCommand('W')
 	
     def driveWheelchairReverse(self):
         #print "WheelchairReverse"
-        self.sendCommand('s')
+        self.sendCommand('S')
 	
     def driveWheelchairLeft(self):
         #print "WheelchairLeft"
-        self.sendCommand('a')
+        self.sendCommand('A')
 	
     def driveWheelchairRight(self):
         #print "WheelchairRight"
-        self.sendCommand('d')
+        self.sendCommand('D')
 	
     def stopWheelchair(self):
         #print "stopWheelchair"
@@ -665,23 +678,8 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def sendCommand(self, command):
 
-        # get the port name
-        port = str(self.comboBoxPortSelect.currentText())
-
-        # open the port
-        ser = serial.Serial(port)
-
         # write command
-        ser.write(command)
-
-        # read up to ten bytes (timeout)
-        s = ser.read(10)
-
-        # read a '\n' terminated line
-        line = ser.readline()
-
-        # close port
-        ser.close()
+        self.serialPort.write(command)
 
     #####################################################################
 
