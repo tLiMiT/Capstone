@@ -148,7 +148,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>images/stop.svg</normaloff>images/stop.svg</iconset>
+        <normaloff>../images/stop.svg</normaloff>../images/stop.svg</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -171,7 +171,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>images/right.svg</normaloff>images/right.svg</iconset>
+        <normaloff>../images/right.svg</normaloff>../images/right.svg</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -194,7 +194,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>images/reverse.svg</normaloff>images/reverse.svg</iconset>
+        <normaloff>../images/reverse.svg</normaloff>../images/reverse.svg</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -217,7 +217,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>images/forward.svg</normaloff>images/forward.svg</iconset>
+        <normaloff>../images/forward.svg</normaloff>../images/forward.svg</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -240,7 +240,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>images/left.svg</normaloff>images/left.svg</iconset>
+        <normaloff>../images/left.svg</normaloff>../images/left.svg</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -253,9 +253,9 @@
     <widget class="QLabel" name="labelWheelchairStatus">
      <property name="geometry">
       <rect>
-       <x>440</x>
-       <y>30</y>
-       <width>261</width>
+       <x>420</x>
+       <y>50</y>
+       <width>321</width>
        <height>41</height>
       </rect>
      </property>
@@ -1400,8 +1400,8 @@
     <widget class="QGroupBox" name="groupBox_EEGsetup">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>30</y>
+       <x>40</x>
+       <y>40</y>
        <width>211</width>
        <height>241</height>
       </rect>
@@ -1441,7 +1441,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>100</y>
+        <y>110</y>
         <width>53</width>
         <height>16</height>
        </rect>
@@ -1473,7 +1473,7 @@
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>90</y>
+        <y>100</y>
         <width>131</width>
         <height>31</height>
        </rect>
@@ -1514,10 +1514,10 @@
     <widget class="QGroupBox" name="groupBox_Device">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>290</x>
        <y>40</y>
        <width>221</width>
-       <height>121</height>
+       <height>241</height>
       </rect>
      </property>
      <property name="title">
@@ -1546,10 +1546,10 @@
      <widget class="QPushButton" name="pushButtonDeviceSearch">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>80</y>
-        <width>71</width>
-        <height>28</height>
+        <x>110</x>
+        <y>90</y>
+        <width>91</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
@@ -1559,24 +1559,57 @@
      <widget class="QPushButton" name="pushButtonDeviceConnect">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>80</y>
-        <width>101</width>
-        <height>28</height>
+        <x>20</x>
+        <y>190</y>
+        <width>181</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
        <string>Connect</string>
       </property>
      </widget>
+     <widget class="QComboBox" name="comboBoxPortSelect">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>130</y>
+        <width>181</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>N/A</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>90</y>
+        <width>81</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Port Select</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QGroupBox" name="groupBox_MsgDest">
      <property name="geometry">
       <rect>
-       <x>540</x>
-       <y>50</y>
+       <x>550</x>
+       <y>40</y>
        <width>241</width>
-       <height>211</height>
+       <height>241</height>
       </rect>
      </property>
      <property name="title">
@@ -1606,7 +1639,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>120</y>
+        <y>150</y>
         <width>201</width>
         <height>31</height>
        </rect>
@@ -1628,9 +1661,9 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>170</y>
+        <y>190</y>
         <width>71</width>
-        <height>28</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
@@ -1640,10 +1673,10 @@
      <widget class="QPushButton" name="setMsgDest">
       <property name="geometry">
        <rect>
-        <x>120</x>
-        <y>170</y>
-        <width>101</width>
-        <height>28</height>
+        <x>100</x>
+        <y>190</y>
+        <width>121</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
@@ -1654,7 +1687,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>70</y>
+        <y>90</y>
         <width>201</width>
         <height>31</height>
        </rect>

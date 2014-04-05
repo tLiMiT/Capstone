@@ -30,7 +30,7 @@ import CharacterFreqLogger as cfl
 
 # MAKE SURE TO CHANGE THIS FOR EACH COMPUTER
 cfl.directory = 'C:\\Users\\Tim\\Documents\\GitHub\\Capstone\\capstone\\program\\'
-
+#cfl.directory = 'C:\\Users\\C6\\Desktop\\bin\\'
 
 #####################################################################
 # GLOBALS
@@ -185,7 +185,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     def connectToWheelchair(self):
         
         # Prevent attempting to connect to a device which does not exist
-	device = str(self.comboBoxWheelchairPortSelect.currentText())
+	device = str(self.comboBoxPortSelect.currentText())
 	if device == 'N/A':
 		self.pushButtonDeviceConnect.setChecked(False)	
 		return
@@ -216,7 +216,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
 	# disable the wheelchair connection options	
 	self.comboBoxWheelchairTransmitter.setEnabled(False)
-	self.comboBoxWheelchairPortSelect.setEnabled(False)
+	self.comboBoxPortSelect.setEnabled(False)
 	self.pushButtonWheelchairSearch.setEnabled(False)
 
 	# enable the drive controls
@@ -243,10 +243,10 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         self.stopWheelchair()
 
         # set callbacks
-        self.disconnect(self.pushButtonWheelchairConnect, \
+        self.disconnect(self.pushButtonDeviceConnect, \
                         QtCore.SIGNAL("clicked()"), \
                         self.disconnectFromWheelchair)
-	self.connect(self.pushButtonWheelchairConnect, \
+	self.connect(self.pushButtonDeviceConnect, \
                      QtCore.SIGNAL("clicked()"), \
                      self.connectToWheelchair)
 
@@ -559,13 +559,13 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         # Configure combo box
         if wheelchair_devices == []:
             wheelchair_devices.append('N/A')
-        '''
+        
         if self.pushButtonDeviceConnect.text != 'Disconnect':
-            self.comboBoxWheelchairPortSelect.clear()
+            self.comboBoxPortSelect.clear()
             
             for wheelchair in wheelchair_devices:
-                self.comboBoxWheelchairPortSelect.addItem(wheelchair)
-        '''
+                self.comboBoxPortSelect.addItem(wheelchair)
+        
     #####################################################################
 
     def enumerateSerialPorts(self):
@@ -758,11 +758,18 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def  sendUserMessage(self):
 
-        # Send text in the messageTextBox to the given destination
-        ms.sendMessage(MESSAGE_DESTINATION, USER_MESSAGE)
+        global USER_MESSAGE
 
-        # clear the message after being sent
-        self.clearMessage()
+        if USER_MESSAGE == '':
+            # prevent sending message when nothing has been typed
+            USER_MESSAGE = USER_MESSAGE
+            
+        else:
+            # Send text in the messageTextBox to the given destination
+            ms.sendMessage(MESSAGE_DESTINATION, USER_MESSAGE)
+
+            # clear the message after being sent
+            self.clearMessage()
 
     #####################################################################
 

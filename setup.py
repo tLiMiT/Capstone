@@ -49,23 +49,23 @@ if (sys.platform == 'win32'):
         }
 
         data_files=[(".", \
-                     ["capstone_program_configuration.ini"]),
+                     ["C:\Users\Tim\Documents\GitHub\Capstone/capstone_program_configuration.ini"]),
                     ("images", \
-                     ["images/puzzlebox.ico", \
-                      "images/forward.svg", \
-                      "images/reverse.svg", \
-                      "images/left.svg", \
-                      "images/right.svg", \
-                      "images/stop.svg",
+                     ["C:\Users\Tim\Documents\GitHub\Capstone/images/puzzlebox.ico", \
+                      "C:\Users\Tim\Documents\GitHub\Capstone/images/forward.svg", \
+                      "C:\Users\Tim\Documents\GitHub\Capstone/images/reverse.svg", \
+                      "C:\Users\Tim\Documents\GitHub\Capstone/images/left.svg", \
+                      "C:\Users\Tim\Documents\GitHub\Capstone/images/right.svg", \
+                      "C:\Users\Tim\Documents\GitHub\Capstone/images/stop.svg",
                       ]),
                     ("capstone/program", \
-                     ["capstone/program/CharFreqBinary_f_base.bin"]),
+                     ["C:\Users\Tim\Documents\GitHub\Capstone/capstone/program/CharFreqBinary_f_base.bin"]),
                     ]
     
 else:
+        # Reserved for non-Windows OS
         options={}
 
-        # Reserved for non-Windows OS
         data_files=[]
 
 
@@ -85,12 +85,10 @@ setup(
                     'capstone.program.GUI_Design', \
                     'capstone.program.MessageSender', \
                     'capstone.program.TextInserter', \
-#                    'capstone.program.TextTester', \
                     'capstone.program.Wheelchair_Control', \
                     'program-local', \
         ], \
         console=["program-local.py", \
-#                 ""
         ], \
         options=options, \
         zipfile = r'lib\library.zip',
