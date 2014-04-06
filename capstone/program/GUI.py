@@ -21,7 +21,7 @@ from PyQt4 import QtCore, QtGui
 from GUI_Design import Ui_Form as Design
 
 #import Client as program_client
-import Wheelchair_Control as wheelchair_control
+#import Wheelchair_Control as wheelchair_control
 
 import MessageSender as ms
 import TextInserter as ti
@@ -172,6 +172,8 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.pushButtonReverse.setEnabled(False)
 	self.pushButtonStop.setEnabled(False)
 
+	self.dialSpeed.setEnabled(False)
+
 	
         ## Control Panel ##
 
@@ -234,6 +236,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.pushButtonLeft.setEnabled(True)
 	self.pushButtonRight.setEnabled(True)
 	self.pushButtonStop.setEnabled(True)
+	
 	self.dialSpeed.setEnabled(True)
 
 	# update status label
@@ -279,6 +282,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.pushButtonLeft.setEnabled(False)
 	self.pushButtonRight.setEnabled(False)
 	self.pushButtonStop.setEnabled(False)
+	
 	self.dialSpeed.setEnabled(False)
 
 	# update status label
@@ -678,7 +682,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def sendCommand(self, command):
 
-        # write command
+        # write command to the serial port
         self.serialPort.write(command)
 
     #####################################################################
@@ -871,9 +875,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             # loop through and click the selected button
             if CLICKS == 1:
                 # begin keyboard operation
-                self.groupBox_keyboard.setStyleSheet(BLANK)
                 self.keyboardSelectRight.setText("Select")
-                CHOICE = False
 
                 # fill IMPORTED_KEYS
                 IMPORTED_KEYS = self.selector.splitChoices()
