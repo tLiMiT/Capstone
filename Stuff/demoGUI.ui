@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1112</width>
-    <height>789</height>
+    <height>680</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
      <x>0</x>
      <y>0</y>
      <width>1111</width>
-     <height>791</height>
+     <height>681</height>
     </rect>
    </property>
    <property name="layoutDirection">
@@ -280,9 +280,9 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>160</y>
+       <y>150</y>
        <width>1021</width>
-       <height>451</height>
+       <height>401</height>
       </rect>
      </property>
      <property name="title">
@@ -291,10 +291,10 @@
      <widget class="QPushButton" name="keyboardQ">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>90</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -311,10 +311,10 @@
      <widget class="QPushButton" name="keyboardW">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>160</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -331,10 +331,10 @@
      <widget class="QPushButton" name="keyboardT">
       <property name="geometry">
        <rect>
-        <x>350</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>370</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -351,10 +351,10 @@
      <widget class="QPushButton" name="keyboardE">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>230</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -371,10 +371,10 @@
      <widget class="QPushButton" name="keyboardR">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>300</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -391,10 +391,10 @@
      <widget class="QPushButton" name="keyboardY">
       <property name="geometry">
        <rect>
-        <x>430</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>440</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -412,9 +412,9 @@
       <property name="geometry">
        <rect>
         <x>510</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -431,10 +431,10 @@
      <widget class="QPushButton" name="keyboardI">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>580</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -451,10 +451,10 @@
      <widget class="QPushButton" name="keyboardO">
       <property name="geometry">
        <rect>
-        <x>670</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>650</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -471,10 +471,10 @@
      <widget class="QPushButton" name="keyboardP">
       <property name="geometry">
        <rect>
-        <x>750</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>720</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -491,10 +491,10 @@
      <widget class="QPushButton" name="keyboardNum5">
       <property name="geometry">
        <rect>
-        <x>350</x>
-        <y>40</y>
-        <width>71</width>
-        <height>71</height>
+        <x>370</x>
+        <y>30</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -511,10 +511,10 @@
      <widget class="QPushButton" name="keyboardNum4">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>40</y>
-        <width>71</width>
-        <height>71</height>
+        <x>300</x>
+        <y>30</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -531,10 +531,10 @@
      <widget class="QPushButton" name="keyboardNum3">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>40</y>
-        <width>71</width>
-        <height>71</height>
+        <x>230</x>
+        <y>30</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -551,10 +551,10 @@
      <widget class="QPushButton" name="keyboardNum2">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>40</y>
-        <width>71</width>
-        <height>71</height>
+        <x>160</x>
+        <y>30</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -571,10 +571,10 @@
      <widget class="QPushButton" name="keyboardNum1">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>40</y>
-        <width>71</width>
-        <height>71</height>
+        <x>90</x>
+        <y>30</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -595,9 +595,9 @@
       <property name="geometry">
        <rect>
         <x>510</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -614,10 +614,10 @@
      <widget class="QPushButton" name="keyboardZ">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>90</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -634,10 +634,10 @@
      <widget class="QPushButton" name="keyboardL">
       <property name="geometry">
        <rect>
-        <x>670</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>650</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -654,10 +654,10 @@
      <widget class="QPushButton" name="keyboardK">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>580</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -675,9 +675,9 @@
       <property name="geometry">
        <rect>
         <x>510</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -694,10 +694,10 @@
      <widget class="QPushButton" name="keyboardH">
       <property name="geometry">
        <rect>
-        <x>430</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>440</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -714,10 +714,10 @@
      <widget class="QPushButton" name="keyboardG">
       <property name="geometry">
        <rect>
-        <x>350</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>370</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -734,10 +734,10 @@
      <widget class="QPushButton" name="keyboardF">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>300</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -754,10 +754,10 @@
      <widget class="QPushButton" name="keyboardD">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>230</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -774,10 +774,10 @@
      <widget class="QPushButton" name="keyboardS">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>160</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -794,10 +794,10 @@
      <widget class="QPushButton" name="keyboardA">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>90</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -814,10 +814,10 @@
      <widget class="QPushButton" name="keyboardX">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>160</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -834,10 +834,10 @@
      <widget class="QPushButton" name="keyboardC">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>230</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -854,10 +854,10 @@
      <widget class="QPushButton" name="keyboardV">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>300</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -874,10 +874,10 @@
      <widget class="QPushButton" name="keyboardB">
       <property name="geometry">
        <rect>
-        <x>350</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>370</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -894,10 +894,10 @@
      <widget class="QPushButton" name="keyboardN">
       <property name="geometry">
        <rect>
-        <x>430</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>440</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -914,10 +914,10 @@
      <widget class="QPushButton" name="keyboardNum8">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>40</y>
-        <width>71</width>
-        <height>71</height>
+        <x>580</x>
+        <y>30</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -934,10 +934,10 @@
      <widget class="QPushButton" name="keyboardNum9">
       <property name="geometry">
        <rect>
-        <x>670</x>
-        <y>40</y>
-        <width>71</width>
-        <height>71</height>
+        <x>650</x>
+        <y>30</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -955,9 +955,9 @@
       <property name="geometry">
        <rect>
         <x>510</x>
-        <y>40</y>
-        <width>71</width>
-        <height>71</height>
+        <y>30</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -974,10 +974,10 @@
      <widget class="QPushButton" name="keyboardNum6">
       <property name="geometry">
        <rect>
-        <x>430</x>
-        <y>40</y>
-        <width>71</width>
-        <height>71</height>
+        <x>440</x>
+        <y>30</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -994,10 +994,10 @@
      <widget class="QPushButton" name="keyboardNum0">
       <property name="geometry">
        <rect>
-        <x>750</x>
-        <y>40</y>
-        <width>71</width>
-        <height>71</height>
+        <x>720</x>
+        <y>30</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1014,10 +1014,10 @@
      <widget class="QPushButton" name="keyboardPeriod">
       <property name="geometry">
        <rect>
-        <x>670</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>650</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1034,10 +1034,10 @@
      <widget class="QPushButton" name="keyboardQuestionMark">
       <property name="geometry">
        <rect>
-        <x>750</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>720</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1054,10 +1054,10 @@
      <widget class="QPushButton" name="keyboardExclamationMark">
       <property name="geometry">
        <rect>
-        <x>840</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>800</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1074,10 +1074,10 @@
      <widget class="QPushButton" name="keyboardApostrophe">
       <property name="geometry">
        <rect>
-        <x>750</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>720</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1092,10 +1092,10 @@
      <widget class="QPushButton" name="keyboardBackspace">
       <property name="geometry">
        <rect>
-        <x>840</x>
-        <y>40</y>
-        <width>151</width>
-        <height>71</height>
+        <x>800</x>
+        <y>30</y>
+        <width>131</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1112,10 +1112,10 @@
      <widget class="QPushButton" name="keyboardSpace">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>360</y>
-        <width>471</width>
-        <height>71</height>
+        <x>230</x>
+        <y>310</y>
+        <width>411</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1132,10 +1132,10 @@
      <widget class="QPushButton" name="keyboardColon">
       <property name="geometry">
        <rect>
-        <x>840</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>800</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1152,10 +1152,10 @@
      <widget class="QPushButton" name="keyboardSemiColon">
       <property name="geometry">
        <rect>
-        <x>920</x>
-        <y>200</y>
-        <width>71</width>
-        <height>71</height>
+        <x>870</x>
+        <y>170</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1172,10 +1172,10 @@
      <widget class="QPushButton" name="keyboardLeftParen">
       <property name="geometry">
        <rect>
-        <x>840</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>800</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1192,10 +1192,10 @@
      <widget class="QPushButton" name="keyboardRightParen">
       <property name="geometry">
        <rect>
-        <x>920</x>
-        <y>120</y>
-        <width>71</width>
-        <height>71</height>
+        <x>870</x>
+        <y>100</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1212,10 +1212,10 @@
      <widget class="QPushButton" name="keyboardSlash">
       <property name="geometry">
        <rect>
-        <x>920</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>870</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1232,10 +1232,10 @@
      <widget class="QPushButton" name="keyboardComma">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>280</y>
-        <width>71</width>
-        <height>71</height>
+        <x>580</x>
+        <y>240</y>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1252,10 +1252,10 @@
      <widget class="QPushButton" name="messageClearButton">
       <property name="geometry">
        <rect>
-        <x>840</x>
-        <y>360</y>
-        <width>151</width>
-        <height>71</height>
+        <x>800</x>
+        <y>310</y>
+        <width>131</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1274,7 +1274,7 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>20</y>
+       <y>10</y>
        <width>1021</width>
        <height>131</height>
       </rect>
@@ -1327,9 +1327,9 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>630</y>
+       <y>550</y>
        <width>1021</width>
-       <height>121</height>
+       <height>91</height>
       </rect>
      </property>
      <property name="font">
@@ -1347,9 +1347,9 @@
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>30</y>
-        <width>321</width>
-        <height>71</height>
+        <y>20</y>
+        <width>311</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1369,10 +1369,10 @@
      <widget class="QPushButton" name="keyboardSelectRight">
       <property name="geometry">
        <rect>
-        <x>670</x>
-        <y>30</y>
-        <width>321</width>
-        <height>71</height>
+        <x>680</x>
+        <y>20</y>
+        <width>311</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1391,10 +1391,115 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab_3">
+   <widget class="QWidget" name="tabPhrases">
     <attribute name="title">
-     <string>Placeholder</string>
+     <string>Send Phrase</string>
     </attribute>
+    <widget class="QGroupBox" name="groupBox_Phrase">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>60</y>
+       <width>961</width>
+       <height>551</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Commonly Used Phrases</string>
+     </property>
+     <widget class="QListWidget" name="phraseList">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>901</width>
+        <height>351</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QListWidget::item:selected{ background-color: rgb(112, 174, 255) }</string>
+      </property>
+      <property name="currentRow">
+       <number>0</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Phrase 1</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Phrase 2</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Phrase 3</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Phrase 4</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Phrase 5</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="phraseNext">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>430</y>
+        <width>191</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 115, 80);</string>
+      </property>
+      <property name="text">
+       <string>Next</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="phraseSend">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>430</y>
+        <width>191</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(112, 174, 255);</string>
+      </property>
+      <property name="text">
+       <string>Send</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QWidget" name="tabControlPanel">
     <attribute name="title">

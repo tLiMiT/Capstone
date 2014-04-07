@@ -72,9 +72,6 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
         self.connectWidgets()
 
         self.name = "Capstone Interface"
-		
-	# probably not needed
-	#self.capstoneClient = None
 
 	# set serial port
 	self.serialPort = None
@@ -556,15 +553,38 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.connect(action, QtCore.SIGNAL("activated()"), self.keyboardSelectRight, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
-
+        
 	# send message button
 	self.connect(self.messageSendButton, \
                      QtCore.SIGNAL("clicked()"), \
                      self.sendUserMessage)
 
 
-	## Reserved ##
-	
+	## Phrase Buttons ##
+	# next button
+	self.connect(self.phraseNext, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.nextPhrase)
+	# send button
+	self.connect(self.phraseSend, \
+                     QtCore.SIGNAL("clicked()"), \
+                     self.sendPhrase)
+        
+        # set phrase key actions
+	action = QtGui.QAction(self)
+	action.setShortcut(QtGui.QKeySequence("z"))
+	self.connect(action, QtCore.SIGNAL("activated()"), self.phraseSend, \
+                     QtCore.SLOT("animateClick()"))
+	self.addAction(action)
+		
+	action = QtGui.QAction(self)
+	action.setShortcut(QtGui.QKeySequence("c"))
+	self.connect(action, QtCore.SIGNAL("activated()"), self.phraseNext, \
+                     QtCore.SLOT("animateClick()"))
+	self.addAction(action)
+        
+
+	## Reserved ##	
 		
     #####################################################################
 
@@ -660,19 +680,19 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     
     def driveWheelchairForward(self):
         #print "WheelchairForward"
-        self.sendCommand('W')
+        self.sendCommand('w')
 	
     def driveWheelchairReverse(self):
         #print "WheelchairReverse"
-        self.sendCommand('S')
+        self.sendCommand('s')
 	
     def driveWheelchairLeft(self):
         #print "WheelchairLeft"
-        self.sendCommand('A')
+        self.sendCommand('a')
 	
     def driveWheelchairRight(self):
         #print "WheelchairRight"
-        self.sendCommand('D')
+        self.sendCommand('d')
 	
     def stopWheelchair(self):
         #print "stopWheelchair"
@@ -714,6 +734,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
     #####################################################################
 
     def rotateTabs(self):
+        global USER_MESSAGE
 
         # get the total number of tabs
         # NOTE: count returns N (0 to N-1 tabs)
@@ -995,7 +1016,36 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     #####################################################################
 
-    #
+    def nextPhrase(self):
+
+        # get the total number of list items
+        count = self.phraseList.count()
+
+        # get current list index
+        index = self.phraseList.currentRow()
+
+        # if index is equal to the count...
+        if (index == count-1):
+            # reset the index
+            index = 0
+        else:
+            # increment the index
+            index = index + 1
+
+        # set new list item as current list item
+        self.phraseList.setCurrentItem(self.phraseList.item(index))
+
+    #####################################################################
+
+    def sendPhrase(self):
+
+        global USER_MESSAGE
+
+        # get current phrase
+        USER_MESSAGE = str(self.phraseList.currentItem().text())
+
+        # send phrase
+        self.sendUserMessage()
     
     #####################################################################
 
