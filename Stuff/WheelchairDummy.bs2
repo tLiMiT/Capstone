@@ -45,11 +45,12 @@ DO
     CASE %0010
       GOSUB Turn_Right
     CASE %0100
-      GOSUB fastForward
+      'GOSUB fastForward
+      GOSUB moveForward
     CASE %1000
       GOSUB moveBack
     CASE ELSE
-      PAUSE 3 ' Halt
+      HIGH Red_LED
   ENDSELECT
 
 LOOP
@@ -80,14 +81,15 @@ moveBack:
 
 'Subroutine: Turn_Right
 Turn_Right:
-  PULSOUT Left_Motor,  850
-  PULSOUT Right_Motor, 850
-  HIGH Red_LED
+  PULSOUT Left_Motor,  800
+  PULSOUT Right_Motor, 800
+  HIGH Blue_LED
   RETURN
 
 'Subroutine: Turn_Left
 Turn_Left:
-  PULSOUT Left_Motor,  650
-  PULSOUT Right_Motor, 650
+  PULSOUT Left_Motor,  700
+  PULSOUT Right_Motor, 700
   HIGH Blue_LED
   RETURN
+

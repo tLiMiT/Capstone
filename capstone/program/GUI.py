@@ -312,15 +312,31 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	self.connect(self.pushButtonForward, \
                      QtCore.SIGNAL("pressed()"), \
                      self.driveWheelchairForward)
+	self.connect(self.pushButtonForward, \
+                     QtCore.SIGNAL("released()"), \
+                     self.stopWheelchair)
+	
 	self.connect(self.pushButtonReverse, \
                      QtCore.SIGNAL("pressed()"), \
-                     self.driveWheelchairReverse)	
+                     self.driveWheelchairReverse)
+	self.connect(self.pushButtonReverse, \
+                     QtCore.SIGNAL("released()"), \
+                     self.stopWheelchair)
+	
 	self.connect(self.pushButtonLeft, \
                      QtCore.SIGNAL("pressed()"), \
-                     self.driveWheelchairLeft)	
+                     self.driveWheelchairLeft)
+	self.connect(self.pushButtonLeft, \
+                     QtCore.SIGNAL("released()"), \
+                     self.stopWheelchair)
+	
 	self.connect(self.pushButtonRight, \
                      QtCore.SIGNAL("pressed()"), \
                      self.driveWheelchairRight)
+	self.connect(self.pushButtonRight, \
+                     QtCore.SIGNAL("released()"), \
+                     self.stopWheelchair)
+	
 	self.connect(self.pushButtonStop, \
                      QtCore.SIGNAL("pressed()"), \
                      self.stopWheelchair)
@@ -328,31 +344,31 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 	# set wheelchair button actions
 	action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("w"))
-	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonForward, \
+	self.connect(action, QtCore.SIGNAL("triggered()"), self.pushButtonForward, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
 		
 	action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("s"))
-	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonReverse, \
+	self.connect(action, QtCore.SIGNAL("triggered()"), self.pushButtonReverse, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
 		
 	action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("a"))
-	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonLeft, \
+	self.connect(action, QtCore.SIGNAL("triggered()"), self.pushButtonLeft, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
 		
 	action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("d"))
-	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonRight, \
+	self.connect(action, QtCore.SIGNAL("triggered()"), self.pushButtonRight, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)
 		
 	action = QtGui.QAction(self)
 	action.setShortcut(QtGui.QKeySequence("Space"))
-	self.connect(action, QtCore.SIGNAL("activated()"), self.pushButtonStop, \
+	self.connect(action, QtCore.SIGNAL("triggered()"), self.pushButtonStop, \
                      QtCore.SLOT("animateClick()"))
 	self.addAction(action)	
 		
@@ -753,6 +769,115 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
         # set the new tab as the current tab
         self.tabWidget.setCurrentIndex(index)
+
+        if index == 0:
+
+            # delete actions
+            for action in self.actions():
+                self.removeAction(action)
+            action.deleteLater()
+
+            # set tab
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("Tab"))
+            self.connect(action, QtCore.SIGNAL("triggered()"), self.rotateTabs)
+            self.addAction(action)
+
+            # set wheelchair button actions
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("w"))
+            self.connect(action, QtCore.SIGNAL("triggered()"), self.pushButtonForward, \
+                         QtCore.SLOT("animateClick()"))
+            self.addAction(action)
+		
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("s"))
+            self.connect(action, QtCore.SIGNAL("triggered()"), self.pushButtonReverse, \
+                         QtCore.SLOT("animateClick()"))
+            self.addAction(action)
+		
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("a"))
+            self.connect(action, QtCore.SIGNAL("triggered()"), self.pushButtonLeft, \
+                         QtCore.SLOT("animateClick()"))
+            self.addAction(action)
+		
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("d"))
+            self.connect(action, QtCore.SIGNAL("triggered()"), self.pushButtonRight, \
+                         QtCore.SLOT("animateClick()"))
+            self.addAction(action)
+		
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("Space"))
+            self.connect(action, QtCore.SIGNAL("triggered()"), self.pushButtonStop, \
+                         QtCore.SLOT("animateClick()"))
+            self.addAction(action)
+
+        if index == 1:
+
+            # delete actions
+            for action in self.actions():
+                self.removeAction(action)
+            action.deleteLater()
+
+            # set tab
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("Tab"))
+            self.connect(action, QtCore.SIGNAL("triggered()"), self.rotateTabs)
+            self.addAction(action)
+
+            # set select key actions          
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("a"))
+            self.connect(action, QtCore.SIGNAL("activated()"), self.keyboardSelectLeft, \
+                         QtCore.SLOT("animateClick()"))
+            self.addAction(action)
+                    
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("d"))
+            self.connect(action, QtCore.SIGNAL("activated()"), self.keyboardSelectRight, \
+                         QtCore.SLOT("animateClick()"))
+            self.addAction(action)
+
+        if index == 2:
+
+            # delete actions
+            for action in self.actions():
+                self.removeAction(action)
+            action.deleteLater()
+
+            # set tab
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("Tab"))
+            self.connect(action, QtCore.SIGNAL("triggered()"), self.rotateTabs)
+            self.addAction(action)
+
+            # set phrase key actions
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("a"))
+            self.connect(action, QtCore.SIGNAL("activated()"), self.phraseSend, \
+                         QtCore.SLOT("animateClick()"))
+            self.addAction(action)
+                    
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("d"))
+            self.connect(action, QtCore.SIGNAL("activated()"), self.phraseNext, \
+                         QtCore.SLOT("animateClick()"))
+            self.addAction(action)
+
+        if index == 3:
+
+            # delete actions
+            for action in self.actions():
+                self.removeAction(action)
+            action.deleteLater()
+
+            # set tab
+            action = QtGui.QAction(self)
+            action.setShortcut(QtGui.QKeySequence("Tab"))
+            self.connect(action, QtCore.SIGNAL("triggered()"), self.rotateTabs)
+            self.addAction(action)
 
     #####################################################################
 
