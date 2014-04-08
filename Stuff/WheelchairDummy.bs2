@@ -1,0 +1,93 @@
+'Capstone Wheelchair Dummy
+'Tim Liming
+
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+
+'Signal program start / reset
+FREQOUT 15, 200, 2500: FREQOUT 15, 200, 2000
+FREQOUT 15, 200, 2500: FREQOUT 15, 700, 3000
+
+'Set Pins -----------------------------------------------------
+Left              PIN   0
+Right             PIN   1
+Forward           PIN   2
+Backwards         PIN   3
+
+Red_LED           PIN   9
+Green_LED         PIN   10
+Blue_LED          PIN   11
+Right_Motor       PIN   12
+Left_Motor        PIN   13
+
+
+'Declare VARs -------------------------------------------------
+bits      VAR     Nib
+
+
+'Main Loop ----------------------------------------------------
+DO
+
+  'Set LED Pins low
+  LOW Red_LED: LOW Green_LED: LOW Blue_LED
+
+  'Check input pins
+  DIRA = %1111   ' P3..P0 -> output
+  PAUSE 0
+  DIRA = %0000   ' P3..P0 -> input
+  PAUSE 0
+  bits = INA
+
+  'Choose direction
+  SELECT bits
+    CASE %0001
+      GOSUB Turn_Left
+    CASE %0010
+      GOSUB Turn_Right
+    CASE %0100
+      GOSUB fastForward
+    CASE %1000
+      GOSUB moveBack
+    CASE ELSE
+      PAUSE 3 ' Halt
+  ENDSELECT
+
+LOOP
+
+
+'Subroutines --------------------------------------------------
+
+'Subroutine: fastForward
+fastForward:
+  PULSOUT Left_Motor,  850
+  PULSOUT Right_Motor, 650
+  HIGH Green_LED
+  RETURN
+
+'Subroutine: moveForward
+moveForward:
+  PULSOUT Left_Motor,  800
+  PULSOUT Right_Motor, 700
+  HIGH Green_LED
+  RETURN
+
+'Subroutine: moveBack
+moveBack:
+  PULSOUT Left_Motor,  700
+  PULSOUT Right_Motor, 800
+  HIGH Green_LED
+  RETURN
+
+'Subroutine: Turn_Right
+Turn_Right:
+  PULSOUT Left_Motor,  850
+  PULSOUT Right_Motor, 850
+  HIGH Red_LED
+  RETURN
+
+'Subroutine: Turn_Left
+Turn_Left:
+  PULSOUT Left_Motor,  650
+  PULSOUT Right_Motor, 650
+  HIGH Blue_LED
+  RETURN
