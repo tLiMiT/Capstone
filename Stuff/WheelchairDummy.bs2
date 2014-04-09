@@ -13,17 +13,24 @@ Left              PIN   0
 Right             PIN   1
 Forward           PIN   2
 Backwards         PIN   3
-
+PING              PIN   6
 Red_LED           PIN   9
 Green_LED         PIN   10
 Blue_LED          PIN   11
 Right_Motor       PIN   12
 Left_Motor        PIN   13
 
+'Set Constants ------------------------------------------------
+slowThresh        CON   20    ' distance to slow down
+stopThresh        CON   8     ' distance to trigger a halt
+Trigger           CON   5     ' send a pulse to the PING)))
+Centimeters       CON   2251  ' convert PING data to centimeters
+setHigh           CON   1     ' Logic HIGH
+setLow            CON   0     ' Logic LOW
 
 'Declare VARs -------------------------------------------------
-bits      VAR     Nib
-
+bits              VAR   Nib
+distBumper        VAR   Word
 
 'Main Loop ----------------------------------------------------
 DO
@@ -40,17 +47,31 @@ DO
 
   'Choose direction
   SELECT bits
-    CASE %0001
+    CASE %0001 ' Left
       GOSUB Turn_Left
-    CASE %0010
+
+    CASE %0010 ' Right
       GOSUB Turn_Right
-    CASE %0100
-      'GOSUB fastForward
-      GOSUB moveForward
+
+    CASE %0100 ' Forward
+      'Get the bumper distance
+      GOSUB getBumperDist
+
+      IF (distBumper > slowThresh) THEN
+        GOSUB fastForward
+      ELSEIF ((distBumper <= slowThresh)&(distBumper > stopThresh)) THEN
+        GOSUB moveForward
+      ELSEIF (distBumper <= stopThresh) THEN
+        ' STOP
+        HIGH Red_LED
+      ENDIF
+
     CASE %1000
       GOSUB moveBack
-    CASE ELSE
+
+    CASE ELSE ' Stopped
       HIGH Red_LED
+
   ENDSELECT
 
 LOOP
@@ -58,38 +79,51 @@ LOOP
 
 'Subroutines --------------------------------------------------
 
+'Subroutine: getBumperDist
+getBumperDist:
+  PING = setLow                             ' set PING LOW
+  PULSOUT PING, Trigger                     ' trigger PING
+  PULSIN  PING, setHigh, distBumper         ' receive pulse
+  distBumper = distBumper ** Centimeters    ' convert to centimeters
+  RETURN
+
 'Subroutine: fastForward
 fastForward:
-  PULSOUT Left_Motor,  850
-  PULSOUT Right_Motor, 650
+  PULSOUT Left_Motor,  950
+  PULSOUT Right_Motor, 550
   HIGH Green_LED
   RETURN
 
 'Subroutine: moveForward
 moveForward:
-  PULSOUT Left_Motor,  800
-  PULSOUT Right_Motor, 700
+  PULSOUT Left_Motor,  775
+  PULSOUT Right_Motor, 725
   HIGH Green_LED
   RETURN
 
 'Subroutine: moveBack
 moveBack:
-  PULSOUT Left_Motor,  700
-  PULSOUT Right_Motor, 800
+  PULSOUT Left_Motor,  650
+  PULSOUT Right_Motor, 850
   HIGH Green_LED
   RETURN
 
 'Subroutine: Turn_Right
 Turn_Right:
-  PULSOUT Left_Motor,  800
-  PULSOUT Right_Motor, 800
+  PULSOUT Left_Motor,  850
+  PULSOUT Right_Motor, 850
   HIGH Blue_LED
   RETURN
 
 'Subroutine: Turn_Left
 Turn_Left:
-  PULSOUT Left_Motor,  700
-  PULSOUT Right_Motor, 700
+  PULSOUT Left_Motor,  650
+  PULSOUT Right_Motor, 650
   HIGH Blue_LED
   RETURN
 
+'Subroutine: halt
+halt:
+  PULSOUT Left_Motor,  750
+  PULSOUT Right_Motor, 750
+  RETURN

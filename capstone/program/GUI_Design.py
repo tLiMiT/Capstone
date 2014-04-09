@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'demoGUI.ui'
 #
-# Created: Mon Apr 07 15:31:52 2014
+# Created: Wed Apr 09 13:06:58 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -576,6 +576,10 @@ class Ui_Form(object):
         self.phraseList.addItem(item)
         item = QtGui.QListWidgetItem()
         self.phraseList.addItem(item)
+        item = QtGui.QListWidgetItem()
+        self.phraseList.addItem(item)
+        item = QtGui.QListWidgetItem()
+        self.phraseList.addItem(item)
         self.phraseNext = QtGui.QPushButton(self.groupBox_Phrase)
         self.phraseNext.setGeometry(QtCore.QRect(560, 430, 191, 81))
         font = QtGui.QFont()
@@ -756,15 +760,19 @@ class Ui_Form(object):
         __sortingEnabled = self.phraseList.isSortingEnabled()
         self.phraseList.setSortingEnabled(False)
         item = self.phraseList.item(0)
-        item.setText(_translate("Form", "Phrase 1", None))
+        item.setText(_translate("Form", "I need to go to the bathroom.", None))
         item = self.phraseList.item(1)
-        item.setText(_translate("Form", "Phrase 2", None))
+        item.setText(_translate("Form", "I would like something to eat.", None))
         item = self.phraseList.item(2)
-        item.setText(_translate("Form", "Phrase 3", None))
+        item.setText(_translate("Form", "I would like something to drink.", None))
         item = self.phraseList.item(3)
-        item.setText(_translate("Form", "Phrase 4", None))
+        item.setText(_translate("Form", "I need assistance.", None))
         item = self.phraseList.item(4)
         item.setText(_translate("Form", "Phrase 5", None))
+        item = self.phraseList.item(5)
+        item.setText(_translate("Form", "Phrase 6", None))
+        item = self.phraseList.item(6)
+        item.setText(_translate("Form", "Phrase 7", None))
         self.phraseList.setSortingEnabled(__sortingEnabled)
         self.phraseNext.setText(_translate("Form", "Next", None))
         self.phraseSend.setText(_translate("Form", "Send", None))

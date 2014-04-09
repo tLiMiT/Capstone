@@ -775,7 +775,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             # delete actions
             for action in self.actions():
                 self.removeAction(action)
-            action.deleteLater()
+                action.deleteLater()
 
             # set tab
             action = QtGui.QAction(self)
@@ -819,7 +819,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             # delete actions
             for action in self.actions():
                 self.removeAction(action)
-            action.deleteLater()
+                action.deleteLater()
 
             # set tab
             action = QtGui.QAction(self)
@@ -845,7 +845,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             # delete actions
             for action in self.actions():
                 self.removeAction(action)
-            action.deleteLater()
+                action.deleteLater()
 
             # set tab
             action = QtGui.QAction(self)
@@ -871,7 +871,7 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
             # delete actions
             for action in self.actions():
                 self.removeAction(action)
-            action.deleteLater()
+                action.deleteLater()
 
             # set tab
             action = QtGui.QAction(self)
@@ -927,18 +927,23 @@ class capstone_program_client_interface(QtGui.QWidget, Design):
 
     def sendUserMessage(self):
 
-        global USER_MESSAGE
+        global MESSAGE_DESTINATION, USER_MESSAGE
 
-        if USER_MESSAGE == '':
-            # prevent sending message when nothing has been typed
-            USER_MESSAGE = USER_MESSAGE
-            
+        if MESSAGE_DESTINATION == '':
+            # prevent sending a message when no destination has been set
+            MESSAGE_DESTINATION = MESSAGE_DESTINATION
+
         else:
-            # Send text in the messageTextBox to the given destination
-            ms.sendMessage(MESSAGE_DESTINATION, USER_MESSAGE)
+            if USER_MESSAGE == '':
+                # prevent sending a message when nothing has been typed
+                USER_MESSAGE = USER_MESSAGE
+                
+            else:
+                # Send text in the messageTextBox to the given destination
+                ms.sendMessage(MESSAGE_DESTINATION, USER_MESSAGE)
 
-            # clear the message after being sent
-            self.clearMessage()
+                # clear the message after being sent
+                self.clearMessage()
 
     #####################################################################
 

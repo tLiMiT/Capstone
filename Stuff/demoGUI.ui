@@ -1429,27 +1429,37 @@
       </property>
       <item>
        <property name="text">
-        <string>Phrase 1</string>
+        <string>I need to go to the bathroom.</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Phrase 2</string>
+        <string>I would like something to eat.</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Phrase 3</string>
+        <string>I would like something to drink.</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Phrase 4</string>
+        <string>I need assistance.</string>
        </property>
       </item>
       <item>
        <property name="text">
         <string>Phrase 5</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Phrase 6</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Phrase 7</string>
        </property>
       </item>
      </widget>
